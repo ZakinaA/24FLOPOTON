@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>       
+		<h5>PAGE DE CONSULTATION D'UN COURS</h5>
+ <p>
+  <table >
+     <tr><td>Id : </td><td>{{cours.id}} </td></tr>
+	<tr><td>libelle : </td><td>{{cours.libelle}}</td>
+       <tr><td>Age Minimum : </td><td>{{cours.ageMini}}</td></tr>
+	    <tr><td>Heure de début : </td><td>{{cours.heureDebut|date('H:i')}}</td></tr>
+	    <tr><td>Heure de Fin : </td><td>{{cours.heureFin|date('H:i')}}</td></tr>
+ </table>
+    </body>
+</html>
