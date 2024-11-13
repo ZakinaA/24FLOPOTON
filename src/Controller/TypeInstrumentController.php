@@ -26,6 +26,6 @@ class TypeInstrumentController extends AbstractController
 
     $typesinstruments= $repository->findAll();
     return $this->render('typeinstrument/lister.html.twig', [
-        'tTypeInstrument' => $typesinstruments,]);
+        'tTypesInstruments' => $typesinstruments,]);
     }
 }
