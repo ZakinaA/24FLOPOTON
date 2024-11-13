@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+		
+		LISTE DES COURS</br>
+		<table>
+		{% for c in pCours %}
+		<tr>
+			<td><a href="{{ path('app_cours_lister', { 'id': c.id }) }}">{{ c.libelle }}</a></td>
+	{% else %}
+		<tr>
+		<td>Aucun cours n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+</table>
+	
+	 
+    </body>
+</html>
