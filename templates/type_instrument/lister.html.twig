@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+		
+		LISTE DES TYPES D'INSTRUMENTS</br>
+		<table>
+		{% for t in tTypesInstruments %}
+		<tr>
+			<td>{{ t.libelle }}</td>
+	{% else %}
+		<tr>
+		<td>Aucun type d'instrument n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+</table>
+	
+	 
+    </body>
+</html>
