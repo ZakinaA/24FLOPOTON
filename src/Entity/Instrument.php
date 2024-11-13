@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InstrumentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,17 @@ class Instrument
 
     #[ORM\ManyToOne(inversedBy: 'instruments')]
     private ?TypeInstrument $typeinstrument = null;
+
+    /**
+     * @var Collection<int, Intervention>
+     */
+    #[ORM\OneToMany(targetEntity: Intervention::class, mappedBy: 'instrument')]
+    private Collection $interventions;
+
+    public function __construct()
+    {
+        $this->interventions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,6 +121,36 @@ class Instrument
     public function setTypeInstrument(?TypeInstrument $typeInstrument): static
     {
         $this->typeInstrument = $typeInstrument;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Intervention>
+     */
+    public function getInterventions(): Collection
+    {
+        return $this->interventions;
+    }
+
+    public function addIntervention(Intervention $intervention): static
+    {
+        if (!$this->interventions->contains($intervention)) {
+            $this->interventions->add($intervention);
+            $intervention->setInstrument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIntervention(Intervention $intervention): static
+    {
+        if ($this->interventions->removeElement($intervention)) {
+            // set the owning side to null (unless already changed)
+            if ($intervention->getInstrument() === $this) {
+                $intervention->setInstrument(null);
+            }
+        }
 
         return $this;
     }
