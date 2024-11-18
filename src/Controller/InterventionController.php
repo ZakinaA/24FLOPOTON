@@ -27,12 +27,12 @@ class InterventionController extends AbstractController
     #[Route('/lister', name: 'lister')]
     public function lister(ManagerRegistry $doctrine)
     {
-            $repository = $doctrine->getRepository(Intervention::class);
-            
-            $interventions= $repository->findAll();
-            return $this->render('intervention/lister.html.twig', [
-                'pInterventions' => $interventions,
-            ]); 
+        $repository = $doctrine->getRepository(Intervention::class);
+        
+        $interventions= $repository->findAll();
+        return $this->render('intervention/lister.html.twig', [
+            'pInterventions' => $interventions,
+        ]); 
     }
     #[Route('/ajouter', name:'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){
