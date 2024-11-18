@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Cours;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Form\CoursType;
+
 
 #[Route('/cours', name: 'app_cours_')]
 class CoursController extends AbstractController
@@ -36,12 +39,31 @@ class CoursController extends AbstractController
 
         if (!$cours) {
             throw $this->createNotFoundException(
-            'Aucun eleve trouvé avec le numéro '.$id
+            'Aucun cours trouvé avec le numéro '.$id
             );
         }
 
-        //return new Response('Eleve : '.$cours->getLibelle());
+        //return new Response('Cours : '.$cours->getLibelle());
         return $this->render('cours/consulter.html.twig', [
             'cours' => $cours,]);
+    }
+
+    #[Route('/ajouter', name: 'ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request){
+        $cours = new Cours();
+        $form = $this->createForm(CoursType::class, $cours);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $cours = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($cours);
+            $entityManager->flush();
+            
+            return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
+        } else  {
+            return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
+        }
     }
 }
