@@ -13,6 +13,14 @@
 		<table>
 		{% for i in pInterventions %}
 		<tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.professionnel.nom }}</td>
+            {# <td>{{ i.instrument.libelle }}</td> #}
+            <td>{{ i.dateDebut|date("m/d/Y") }}</td>
+            <td>{{ i.dateFin|date("m/d/Y") }}</td>            
+            <td>{{ i.descriptif }}</td>
+            <td>{{ i.prix }}</td>
+            <td>{{ i.quotite }}</td>
 	{% else %}
 		<tr>
 		<td>Aucune intervention n'a été trouvé.</td>
