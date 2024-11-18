@@ -29,6 +29,12 @@ class Intervention
     #[ORM\Column(nullable: true)]
     private ?int $quotite = null;
 
+    #[ORM\ManyToOne(inversedBy: 'interventions')]
+    private ?professionnel $professionnel = null;
+
+    #[ORM\ManyToOne(inversedBy: 'interventions')]
+    private ?instrument $instrument = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +96,30 @@ class Intervention
     public function setQuotite(?int $quotite): static
     {
         $this->quotite = $quotite;
+
+        return $this;
+    }
+
+    public function getProfessionnel(): ?professionnel
+    {
+        return $this->professionnel;
+    }
+
+    public function setProfessionnel(?professionnel $professionnel): static
+    {
+        $this->professionnel = $professionnel;
+
+        return $this;
+    }
+
+    public function getInstrument(): ?instrument
+    {
+        return $this->instrument;
+    }
+
+    public function setInstrument(?instrument $instrument): static
+    {
+        $this->instrument = $instrument;
 
         return $this;
     }
