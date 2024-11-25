@@ -77,7 +77,7 @@ class InterventionController extends AbstractController
                 $entityManager->persist($intervention);
                 $entityManager->flush();
                 //return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
-                return $this->redirectToRoute('app_intervention_consulter', [
+                return $this->redirectToRoute('app_intervention_lister', [
                     'id' => $intervention->getId(),
                 ]);
            }
