@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html.twig' %}
+
+{% block body %}
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
 		
 		LISTE DES INTERVENTIONS</br>
@@ -28,4 +28,4 @@
 	{% endfor %}
         </table>
     </body>
-</html>
+{% endblock %}

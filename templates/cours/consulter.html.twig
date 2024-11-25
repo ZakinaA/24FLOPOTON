@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html.twig' %}
+{% block body %}
     <head>
         
     </head>
@@ -13,5 +13,4 @@
 	    <tr><td>Heure de début : </td><td>{{cours.heureDebut|date('H:i')}}</td></tr>
 	    <tr><td>Heure de Fin : </td><td>{{cours.heureFin|date('H:i')}}</td></tr>
  </table>
-    </body>
-</html>
+{% endblock %}
