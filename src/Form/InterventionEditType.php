@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\instrument;
+use App\Entity\Instrument;
 use App\Entity\Intervention;
-use App\Entity\professionnel;
+use App\Entity\Professionnel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,11 +26,11 @@ class InterventionEditType extends AbstractType
             ->add('prix')
             ->add('quotite')
             ->add('professionnel', EntityType::class, [
-                'class' => professionnel::class,
+                'class' => Professionnel::class,
                 'choice_label' => 'id',
             ])
             ->add('instrument', EntityType::class, [
-                'class' => instrument::class,
+                'class' => Instrument::class,
                 'choice_label' => 'id',
             ])
             ->add('enregistrer', SubmitType::class, array('label' => 'Enregister les modifications'))

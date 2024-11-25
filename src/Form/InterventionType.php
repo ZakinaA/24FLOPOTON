@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\instrument;
+use App\Entity\Instrument;
 use App\Entity\Intervention;
-use App\Entity\professionnel;
+use App\Entity\Professionnel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,12 +25,12 @@ class InterventionType extends AbstractType
             ->add('prix')
             ->add('quotite')
             ->add('professionnel', EntityType::class, [
-                'class' => professionnel::class,
-                'choice_label' => 'id',
+                'class' => Professionnel::class,
+                'choice_label' => 'nom',
             ])
             ->add('instrument', EntityType::class, [
-                'class' => instrument::class,
-                'choice_label' => 'id',
+                'class' => Instrument::class,
+                'choice_label' => 'numSerie',
             ])
         ;
     }
