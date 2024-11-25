@@ -197,4 +197,3 @@ class Professionnel
         return $this;
     }
 }
-
