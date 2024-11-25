@@ -144,14 +144,14 @@ class Professionnel
     }
 
     /**
-     * @return Collection<int, metier>
+     * @return Collection<int, Metier>
      */
     public function getMetier(): Collection
     {
         return $this->metier;
     }
 
-    public function addMetier(metier $metier): static
+    public function addMetier(Metier $metier): static
     {
         if (!$this->metier->contains($metier)) {
             $this->metier->add($metier);
@@ -160,7 +160,7 @@ class Professionnel
         return $this;
     }
 
-    public function removeMetier(metier $metier): static
+    public function removeMetier(Metier $metier): static
     {
         $this->metier->removeElement($metier);
 
