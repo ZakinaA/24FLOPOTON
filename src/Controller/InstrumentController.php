@@ -5,14 +5,27 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Instrument;
+use Doctrine\Persistence\ManagerRegistry;
 
+#[Route('/instrument', name: 'instrument')]
 class InstrumentController extends AbstractController
 {
-    #[Route('/instrument', name: 'app_instrument')]
-    public function index(): Response
+    #[Route('/index', name: 'index')]
+    function accueil(): Response
     {
-        return $this->render('instrument/index.html.twig', [
-            'controller_name' => 'InstrumentController',
-        ]);
+        $annee = '2024';
+        return $this->render('instrument/index.html.twig', ['pAnnee' => $annee,
+       ]);	
+    }
+
+    #[Route('/lister', name: 'lister')]
+    function instrumentLister(ManagerRegistry $doctrine){
+
+        $repository = $doctrine->getRepository(Instrument::class);
+
+    $instruments= $repository->findAll();
+    return $this->render('instrument/lister.html.twig', [
+        'iInstrument' => $instruments,]);
     }
 }
