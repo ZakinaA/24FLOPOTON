@@ -32,9 +32,6 @@ class Intervention
     #[ORM\ManyToOne(inversedBy: 'interventions')]
     private ?professionnel $professionnel = null;
 
-    #[ORM\ManyToOne(inversedBy: 'interventions')]
-    private ?instrument $instrument = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -108,18 +105,6 @@ class Intervention
     public function setProfessionnel(?professionnel $professionnel): static
     {
         $this->professionnel = $professionnel;
-
-        return $this;
-    }
-
-    public function getInstrument(): ?instrument
-    {
-        return $this->instrument;
-    }
-
-    public function setInstrument(?instrument $instrument): static
-    {
-        $this->instrument = $instrument;
 
         return $this;
     }

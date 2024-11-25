@@ -37,9 +37,9 @@ class Professionnel
     private ?string $mail = null;
 
     /**
-     * @var Collection<int, metier>
+     * @var Collection<int, Metier>
      */
-    #[ORM\ManyToMany(targetEntity: metier::class, inversedBy: 'professionnels')]
+    #[ORM\ManyToMany(targetEntity: Metier::class, inversedBy: 'professionnels')]
     private Collection $metier;
 
     /**
