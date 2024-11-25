@@ -79,6 +79,14 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    #[Route('/edit', name: 'edit')]
+    public function edit(): Response
+    {
+        return $this->render('security/edit.html.twig', [
+            
+        ]);
+    }
+
     #[Route(path: '/logout', name: 'logout')]
     public function logout(): void
     {
