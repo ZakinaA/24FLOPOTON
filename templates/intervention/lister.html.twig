@@ -21,6 +21,8 @@
             <td>{{ i.descriptif }}</td>
             <td>{{ i.prix }}</td>
             <td>{{ i.quotite }}</td>
+    <td><a href="{{ path('app_intervention_supprimer', { 'id': i.id }) }}" onclick="return  confirm('Êtes vous sur de vouloir supprimer cette intervention ?')">Supprimer</a></td>
+
 	{% else %}
 		<tr>
 		<td>Aucune intervention n'a été trouvé.</td>
