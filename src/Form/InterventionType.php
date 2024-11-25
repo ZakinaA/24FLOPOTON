@@ -7,6 +7,7 @@ use App\Entity\Intervention;
 use App\Entity\Professionnel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,6 +33,8 @@ class InterventionType extends AbstractType
                 'class' => Instrument::class,
                 'choice_label' => 'numSerie',
             ])
+            ->add('enregistrer', SubmitType::class, options: array('label' => 'nouvelle intervention'))
+
         ;
     }
 

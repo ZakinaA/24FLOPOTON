@@ -34,6 +34,7 @@ class InterventionController extends AbstractController
             'pInterventions' => $interventions,
         ]); 
     }
+    
     #[Route('/ajouter', name:'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){
         $intervention = new Intervention();
@@ -47,8 +48,8 @@ class InterventionController extends AbstractController
             $entityManager->persist($intervention);
             $entityManager->flush();
             
-            return $this->redirectToRoute('app_intervention_consulter', [
-                'id' => $intervention->getId(),
+            return $this->redirectToRoute('app_intervention_lister', [
+                //'id' => $intervention->getId(),
             ]);
         }
         else
