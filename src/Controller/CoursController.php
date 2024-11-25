@@ -97,4 +97,21 @@ class CoursController extends AbstractController
             }
      }
 
+     #[Route('/supprimer/{id}', name: 'supprimer')]
+
+     public function supprimer(ManagerRegistry $doctrine, int $id): Response
+     {
+         $cours = $doctrine->getRepository(Cours::class)->find($id);
+ 
+         if (!$cours) {
+             throw $this->createNotFoundException('Aucun cours trouvé avec l\'ID '.$id);
+         }
+ 
+         $entityManager = $doctrine->getManager();
+         $entityManager->remove($cours); 
+         $entityManager->flush();
+ 
+         return $this->redirectToRoute('app_intervention_lister');
+     }
+
 }
