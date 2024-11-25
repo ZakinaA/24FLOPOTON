@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html.twig' %}
+{% block body %}
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
 		
 		LISTE DES ACCESOIRES D'UN INSTRUMENT</br>
@@ -19,8 +17,5 @@
 		<td>Aucun accesoire n'a été trouvé.</td>
 		</tr>
 	{% endfor %}
-</table>
-	
-	 
-    </body>
-</html>
+	</table> 
+{% endblock %}

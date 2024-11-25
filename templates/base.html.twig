@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Bienvenur sur eMusic !{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
         {% endblock %}
@@ -10,8 +10,64 @@
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>
+            body {
+		        padding-top: 50px;
+            }
+            .special {
+		        padding-top:50px;
+            }
+            .gray {
+                color: gray;
+            }
+            .gray:hover {
+                color: gray;
+            }
+            a.disabled {
+                pointer-events: none;
+                cursor: default;
+                color: gray;
+            }
+            .dropdown:hover .dropdown-menu {
+                display: block;
+            }
+        </style>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <a class="navbar-brand" {% if app.user %} href={{ path('app_account_edit') }}{% endif %}>
+                Bienvenue{% if app.user %} {{ app.user.username }}{% endif %} !
+            </a>
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href={{ path('app_main_index') }}>Accueil</a>
+                    <!--<ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="/paris2024/ServletAthlete" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Gestion des athlètes <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/paris2024/ServletAthlete/lister">Lister Athlètes</a></li>
+                                <li><a href="/paris2024/ServletAthlete/ajouter">Ajouter Athlète</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="/paris2024/ServletSport" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Gestion des sports <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/paris2024/ServletSport/lister">Lister Sports</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="/paris2024/ServletSite" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Gestion des sites <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/paris2024/ServletSite/lister">Lister Sites</a></li>
+                                <li><a href="/paris2024/ServletSite/ajouter">Ajouter Site</a></li>
+                            </ul>
+                        </li>
+                    </ul>-->
+                </div>
+            </div>
+        </nav>
+        <div style="margin: 2% 2% 2% 2%">{% block body %}{% endblock %}</div>
     </body>
 </html>
