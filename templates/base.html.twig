@@ -43,28 +43,28 @@
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href={{ path('app_main_index') }}>Accueil</a>
-                    <!--<ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="/paris2024/ServletAthlete" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Gestion des athlètes <span class="caret"></span></a>
+                            <a href="/paris2024/ServletAthlete" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Gestionnaire<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/paris2024/ServletAthlete/lister">Lister Athlètes</a></li>
-                                <li><a href="/paris2024/ServletAthlete/ajouter">Ajouter Athlète</a></li>
+                                <li><a href={{ path('app_cours_lister') }}>Gérer les Cours</a></li>
+                                <li><a class="disabled" href={{ path('app_main_index') }}>Gérer les Emprunts</a></li>
+                                <li><a class="disabled" href={{ path('app_main_index') }}>Gérer les Inscriptions</a></li>
+                                <li><a href={{ path('app_intervention_lister') }}>Gérer les Interventions</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="/paris2024/ServletSport" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Gestion des sports <span class="caret"></span></a>
+                            <a href="/paris2024/ServletSport" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Administrateur<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/paris2024/ServletSport/lister">Lister Sports</a></li>
+                                <li><a class="disabled" href={{ path('app_main_index') }}>Gérer les Utilisateurs</a></li>
+                                <li><a href={{ path('app_typeinstrument_lister') }}>Gérer les Types d'instrument</a></li>
+                                <li><a href={{ path('app_jour_lister') }}>Gérer les Jours</a></li>
+                                <li><a href={{ path('app_accessoire_lister') }}>Gérer les Accessoires</a></li>
+                                <li><a href={{ path('app_marque_lister') }}>Gérer les Marques</a></li>
+                                <li><a href={{ path('app_modele_lister') }}>Gérer les Modèles</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="/paris2024/ServletSite" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Gestion des sites <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/paris2024/ServletSite/lister">Lister Sites</a></li>
-                                <li><a href="/paris2024/ServletSite/ajouter">Ajouter Site</a></li>
-                            </ul>
-                        </li>
-                    </ul>-->
+                    </ul>
                 </div>
             </div>
         </nav>
