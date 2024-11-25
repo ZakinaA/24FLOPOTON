@@ -22,12 +22,6 @@ class TypeInstrument
      * @var Collection<int, Instrument>
      */
     #[ORM\OneToMany(targetEntity: Instrument::class, mappedBy: 'typeInstrument')]
-    private Collection $instrument;
-
-    /**
-     * @var Collection<int, Instrument>
-     */
-    #[ORM\OneToMany(targetEntity: Instrument::class, mappedBy: 'typeinstrument')]
     private Collection $instruments;
 
     public function __construct()
@@ -56,15 +50,15 @@ class TypeInstrument
     /**
      * @return Collection<int, Instrument>
      */
-    public function getInstrument(): Collection
+    public function getInstruments(): Collection
     {
-        return $this->instrument;
+        return $this->instruments;
     }
 
     public function addInstrument(Instrument $instrument): static
     {
-        if (!$this->instrument->contains($instrument)) {
-            $this->instrument->add($instrument);
+        if (!$this->instruments->contains($instrument)) {
+            $this->instruments->add($instrument);
             $instrument->setTypeInstrument($this);
         }
 
@@ -73,7 +67,7 @@ class TypeInstrument
 
     public function removeInstrument(Instrument $instrument): static
     {
-        if ($this->instrument->removeElement($instrument)) {
+        if ($this->instruments->removeElement($instrument)) {
             // set the owning side to null (unless already changed)
             if ($instrument->getTypeInstrument() === $this) {
                 $instrument->setTypeInstrument(null);
@@ -81,13 +75,5 @@ class TypeInstrument
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Instrument>
-     */
-    public function getInstruments(): Collection
-    {
-        return $this->instruments;
     }
 }

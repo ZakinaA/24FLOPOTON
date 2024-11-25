@@ -16,14 +16,14 @@ class Instrument
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $numSerie = null;
+    #[ORM\Column(length: 255)]
+    private ?string $numSerie = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateAchat = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $prixAchat = null;
+    #[ORM\Column]
+    private ?float $prixAchat = null;
 
     #[ORM\Column(length: 255)]
     private ?string $utilisation = null;
@@ -31,21 +31,28 @@ class Instrument
     #[ORM\Column(length: 255)]
     private ?string $couleur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'instrument')]
+    #[ORM\ManyToOne(inversedBy: 'instruments')]
     private ?TypeInstrument $typeInstrument = null;
 
     #[ORM\ManyToOne(inversedBy: 'instruments')]
-    private ?TypeInstrument $typeinstrument = null;
+    private ?Marque $marque = null;
 
     /**
-     * @var Collection<int, Intervention>
+     * @var Collection<int, Accessoire>
      */
-    #[ORM\OneToMany(targetEntity: Intervention::class, mappedBy: 'instrument')]
-    private Collection $interventions;
+    #[ORM\OneToMany(targetEntity: Accessoire::class, mappedBy: 'instrument')]
+    private Collection $accessoire;
+
+    /**
+     * @var Collection<int, Modele>
+     */
+    #[ORM\ManyToMany(targetEntity: Modele::class, inversedBy: 'instruments')]
+    private Collection $modele;
 
     public function __construct()
     {
-        $this->interventions = new ArrayCollection();
+        $this->accessoire = new ArrayCollection();
+        $this->modele = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -53,12 +60,12 @@ class Instrument
         return $this->id;
     }
 
-    public function getNumSerie(): ?int
+    public function getNumSerie(): ?string
     {
         return $this->numSerie;
     }
 
-    public function setNumSerie(int $numSerie): static
+    public function setNumSerie(string $numSerie): static
     {
         $this->numSerie = $numSerie;
 
@@ -77,12 +84,12 @@ class Instrument
         return $this;
     }
 
-    public function getPrixAchat(): ?string
+    public function getPrixAchat(): ?float
     {
         return $this->prixAchat;
     }
 
-    public function setPrixAchat(string $prixAchat): static
+    public function setPrixAchat(float $prixAchat): static
     {
         $this->prixAchat = $prixAchat;
 
@@ -125,32 +132,68 @@ class Instrument
         return $this;
     }
 
-    /**
-     * @return Collection<int, Intervention>
-     */
-    public function getInterventions(): Collection
+    public function getMarque(): ?Marque
     {
-        return $this->interventions;
+        return $this->marque;
     }
 
-    public function addIntervention(Intervention $intervention): static
+    public function setMarque(?Marque $marque): static
     {
-        if (!$this->interventions->contains($intervention)) {
-            $this->interventions->add($intervention);
-            $intervention->setInstrument($this);
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Accessoire>
+     */
+    public function getAccessoire(): Collection
+    {
+        return $this->accessoire;
+    }
+
+    public function addAccessoire(Accessoire $accessoire): static
+    {
+        if (!$this->accessoire->contains($accessoire)) {
+            $this->accessoire->add($accessoire);
+            $accessoire->setInstrument($this);
         }
 
         return $this;
     }
 
-    public function removeIntervention(Intervention $intervention): static
+    public function removeAccessoire(Accessoire $accessoire): static
     {
-        if ($this->interventions->removeElement($intervention)) {
+        if ($this->accessoire->removeElement($accessoire)) {
             // set the owning side to null (unless already changed)
-            if ($intervention->getInstrument() === $this) {
-                $intervention->setInstrument(null);
+            if ($accessoire->getInstrument() === $this) {
+                $accessoire->setInstrument(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Modele>
+     */
+    public function getModele(): Collection
+    {
+        return $this->modele;
+    }
+
+    public function addModele(Modele $modele): static
+    {
+        if (!$this->modele->contains($modele)) {
+            $this->modele->add($modele);
+        }
+
+        return $this;
+    }
+
+    public function removeModele(Modele $modele): static
+    {
+        $this->modele->removeElement($modele);
 
         return $this;
     }
