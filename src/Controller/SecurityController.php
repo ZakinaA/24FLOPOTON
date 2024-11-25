@@ -40,7 +40,7 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $error = false;
-            if($form->get('username')->getData() == null || $form->get('email')->getData() == null || $form->get('password')->getData() == null || $form->get('confirmpassword')->getData() == null){
+            if($form->get('username')->getData() == null || $form->get('password')->getData() == null || $form->get('confirmpassword')->getData() == null){
                 $this->addFlash('error', 'Informations manquantes');
                 $error = true;
             }
@@ -58,7 +58,7 @@ class SecurityController extends AbstractController
             $username = strtolower($form->get('username')->getData());
 
             if($error){
-                return $this->redirectToRoute('app_register', [
+                return $this->redirectToRoute('app_account_register', [
                     'form'=>$form,
                 ]);
             }
@@ -71,7 +71,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
             $this->addFlash('success','Votre compte a bien été créé !');
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_account_login');
         }
 
         return $this->render('security/register.html.twig', [
