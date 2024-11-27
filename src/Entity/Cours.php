@@ -92,6 +92,7 @@ class Cours
     public function setProfesseur(?Professeur $professeur): static
     {
         $this->professeur = $professeur;
+    }
 
     public function getTypeInstrument(): ?TypeInstrument
     {
