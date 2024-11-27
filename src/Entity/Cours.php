@@ -31,6 +31,7 @@ class Cours
     #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?Professeur $professeur = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?TypeInstrument $typeInstrument = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
