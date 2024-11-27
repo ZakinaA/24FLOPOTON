@@ -13,6 +13,8 @@
 		{% for c in pCours %}
 		<tr>
 			<td><a href="{{ path('app_cours_consulter', { 'id': c.id }) }}">{{ c.libelle }}</a></td>
+			<td>{{ c.typeInstrument.libelle }}</td>
+		</tr>
 	{% else %}
 		<tr>
 		<td>Aucun cours n'a été trouvé.</td>
