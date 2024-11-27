@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,9 @@ class Cours
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?TypeInstrument $typeInstrument = null;
+
+    #[ORM\ManyToOne(inversedBy: 'cours')]
+    private ?Jour $Jour = null;
 
     public function getId(): ?int
     {
@@ -90,6 +95,18 @@ class Cours
     public function setTypeInstrument(?TypeInstrument $typeInstrument): static
     {
         $this->typeInstrument = $typeInstrument;
+
+        return $this;
+    }
+
+    public function getJour(): ?Jour
+    {
+        return $this->Jour;
+    }
+
+    public function setJour(?Jour $Jour): static
+    {
+        $this->Jour = $Jour;
 
         return $this;
     }
