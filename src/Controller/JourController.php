@@ -28,4 +28,6 @@ class JourController extends AbstractController
         return $this->render('jour/lister.html.twig', [
             'pJour' => $jour,]);
     }
+
+
 }
