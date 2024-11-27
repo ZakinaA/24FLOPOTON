@@ -29,6 +29,8 @@ class Cours
     #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?Professeur $professeur = null;
 
+    private ?TypeInstrument $typeInstrument = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +93,14 @@ class Cours
     {
         $this->professeur = $professeur;
 
+    public function getTypeInstrument(): ?TypeInstrument
+    {
+        return $this->typeInstrument;
+    }
+
+    public function setTypeInstrument(?TypeInstrument $typeInstrument): static
+    {
+        $this->typeInstrument = $typeInstrument;
         return $this;
     }
 }
