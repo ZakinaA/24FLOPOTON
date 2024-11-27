@@ -20,22 +20,22 @@ class Responsable
     #[ORM\Column(length: 50)]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $numRue = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $rue = null;
 
-    #[ORM\Column(length: 5)]
+    #[ORM\Column(length: 5, nullable: true)]
     private ?string $copos = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(length: 15)]
+    #[ORM\Column(length: 15, nullable: true)]
     private ?string $tel = null;
 
-    #[ORM\Column(length: 70)]
+    #[ORM\Column(length: 70, nullable: true)]
     private ?string $mail = null;
 
     public function getId(): ?int
