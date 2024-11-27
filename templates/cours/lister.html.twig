@@ -10,10 +10,12 @@
 		
 		LISTE DES COURS</br>
 		<table>
+		
 		{% for c in pCours %}
 		<tr>
 			<td><a href="{{ path('app_cours_consulter', { 'id': c.id }) }}">{{ c.libelle }}</a></td>
 			<td>{{ c.typeInstrument.libelle }}</td>
+			<td>{{ c.jour.libelle }}</td>
 		</tr>
 	{% else %}
 		<tr>
