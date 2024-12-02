@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <a type="button" class="btn btn-primary" href={{ path('app_utilisateur_lister') }}>Retour à la liste</a></br></br>
+  <table>
+    <tr><td>Nom d'utilisateur : </td><td>{{u.username}}</td></tr>
+    <tr><td>Rôles : </td><td>
+				<ul>
+					{% for role in u.roles %}
+						<li>{{ role }}</li>
+					{% endfor %}
+				</ul>
+		</td></tr>
+  </table>
+  {% if u.responsable %}
+  <h3>Données de responsable</h3>
+  <table>
+    <tr><td>Nom : </td><td>{{u.responsable.nom}}</td></tr>
+    <tr><td>Prénom : </td><td>{{u.responsable.prenom}}</td></tr>
+    <tr><td>Numéro de rue : </td><td>{{u.responsable.numrue}}</td></tr>
+    <tr><td>Rue : </td><td>{{u.responsable.rue}}</td></tr>
+    <tr><td>Code postal : </td><td>{{u.responsable.copos}}</td></tr>
+    <tr><td>Ville : </td><td>{{u.responsable.ville}}</td></tr>
+    <tr><td>Téléphone : </td><td>{{u.responsable.tel}}</td></tr>
+    <tr><td>E-mail : </td><td>{{u.responsable.mail}}</td></tr>
+  </table>
+  {% else %}
+  <h3>Cet utilisateur n'est pas un responsable d'élève</h>
+  {% endif %}
+{% endblock %}
