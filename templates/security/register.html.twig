@@ -4,5 +4,22 @@
 
 {% block body %}
     {{ form_start(form)}}
+    <h1>Compte Utilisateur<a style="color: red">*</a></h1>
+    {{ form_row(form.username, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.password.first, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.password.second, {'attr': {'class': 'form-control'}}) }}
+    <h1>Compte Responsable</h1>
+    {{ form_row(form.responsable.nom, {'attr': {'class': 'form-control'}, 'label': 'Nom*'}) }}
+    {{ form_row(form.responsable.prenom, {'attr': {'class': 'form-control'}, 'label': 'Prénom*'}) }}
+    {{ form_row(form.responsable.numRue, {'attr': {'class': 'form-control'}, 'label': 'Numéro de rue'}) }}
+    {{ form_row(form.responsable.rue, {'attr': {'class': 'form-control'}, 'label': 'Rue'}) }}
+    {{ form_row(form.responsable.copos, {'attr': {'class': 'form-control'}, 'label': 'Code postal'}) }}
+    {{ form_row(form.responsable.ville, {'attr': {'class': 'form-control'}, 'label': 'Ville'}) }}
+    {{ form_row(form.responsable.tel, {'attr': {'class': 'form-control'}, 'label': 'Téléphone'}) }}
+    {{ form_row(form.responsable.mail, {'attr': {'class': 'form-control'}, 'label': 'E-mail'}) }}
+    </br>
+    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary'}}) }}
     {{ form_end(form) }}
+    </br>
+    <a class="btn btn-lg" href={{ path('app_account_login') }}>Se connecter</a>
 {% endblock %}

@@ -36,11 +36,12 @@ class SecurityController extends AbstractController
             return $this->render('security/alreadylogged.html.twig');
         }
 
-        $form = $this->createForm(RegisterType::class);
+        $user = new User();
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $error = false;
-            if($form->get('username')->getData() == null || $form->get('password')->getData() == null || $form->get('confirmpassword')->getData() == null){
+            if($form->get('username')->getData() == null || $form->get('password')->getData() == null){
                 $this->addFlash('error', 'Informations manquantes');
                 $error = true;
             }
@@ -50,24 +51,21 @@ class SecurityController extends AbstractController
                 $error = true;
             }
 
-            if($form->get('password')->getData() != $form->get('confirmpassword')->getData()){
-                $this->addFlash('error', 'Le mot de passe ne correspond pas au mot de passe de confirmation');
-                $error = true;
-            }
-
-            $username = strtolower($form->get('username')->getData());
-
             if($error){
                 return $this->redirectToRoute('app_account_register', [
                     'form'=>$form,
                 ]);
             }
 
-            $user = new User();
+            $username = strtolower($form->get('username')->getData());
             $user->setUsername($username);
-
             $user->setPassword($hasher->hashPassword($user, $form->get('password')->getData()));
-            $user->setRoles([3]);
+
+            $responsable = $user->getResponsable();
+            if ($responsable && $responsable->getNom() && $responsable->getPrenom()) {
+                $em->persist($responsable);
+            }
+
             $em->persist($user);
             $em->flush();
             $this->addFlash('success','Votre compte a bien été créé !');
