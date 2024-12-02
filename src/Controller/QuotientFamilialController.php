@@ -26,4 +26,25 @@ class QuotientFamilialController extends AbstractController
             'quotients' => $quotients
         ]);
     }
+
+    #[Route('/ajouter', name:'ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request){
+        $q = new QuotientFamilial();
+        $form = $this->createForm(QuotientFamilialType::class, $q);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $q = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($q);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('app_quotientfamilial_lister');
+        }
+        
+        return $this->render('quotient_familial/ajouter.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }
