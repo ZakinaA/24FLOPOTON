@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block javascripts %}{% endblock %}
+		
+		<h1>LISTE DES QUOTIENTS FAMILIAUX <a type="button" class="btn btn-success" href={#{ path('app_quotientfamilial_ajouter') }#}>Ajouter</a></h1>
+		</br></br>
+		<table width="60%" border="2" cellspacing="1" cellpadding="10">
+		
+		<thead>
+			<tr>
+				<th class="text-center">Libelle</th>
+				<th class="text-center">Quotient minimum</th>
+				<th class="text-center">Action</th>
+			</tr>
+    	</thead>
+		{% for q in quotients %}
+		<tr>
+			<td><a href={#{ path('app_quotientfimilial_consulter', { 'id': q.id }) }#}>{{ q.libelle }}</a></td>
+			<td><a>{{ q.quotientMini }}</a></td>
+			<td>
+				<a class="btn btn-primary" type="button" href={#{ path('app_quotientfimilial_modifier', {'id': u.id}) }#}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={#{ path('app_quotientfimilial_supprimer', {'id': u.id}) }#}>Supprimer</a>
+			</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td>Aucun quotient familial n'a été trouvé.</td>
+		</tr>
+		{% endfor %}
+		</table>
+{% endblock %}

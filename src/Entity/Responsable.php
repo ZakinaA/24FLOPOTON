@@ -38,6 +38,9 @@ class Responsable
     #[ORM\Column(length: 70, nullable: true)]
     private ?string $mail = null;
 
+    #[ORM\ManyToOne(inversedBy: 'responsable')]
+    private ?QuotientFamilial $quotientFamilial = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Responsable
     public function setMail(string $mail): static
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getQuotientFamilial(): ?QuotientFamilial
+    {
+        return $this->quotientFamilial;
+    }
+
+    public function setQuotientFamilial(?QuotientFamilial $quotientFamilial): static
+    {
+        $this->quotientFamilial = $quotientFamilial;
 
         return $this;
     }

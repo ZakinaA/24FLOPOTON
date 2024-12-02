@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuotientFamilialRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuotientFamilialRepository::class)]
@@ -18,6 +20,17 @@ class QuotientFamilial
 
     #[ORM\Column]
     private ?int $quotientMini = null;
+
+    /**
+     * @var Collection<int, Responsable>
+     */
+    #[ORM\OneToMany(targetEntity: Responsable::class, mappedBy: 'quotientFamilial')]
+    private Collection $responsable;
+
+    public function __construct()
+    {
+        $this->responsable = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +57,36 @@ class QuotientFamilial
     public function setQuotientMini(int $quotientMini): static
     {
         $this->quotientMini = $quotientMini;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Responsable>
+     */
+    public function getResponsable(): Collection
+    {
+        return $this->responsable;
+    }
+
+    public function addResponsable(Responsable $responsable): static
+    {
+        if (!$this->responsable->contains($responsable)) {
+            $this->responsable->add($responsable);
+            $responsable->setQuotientFamilial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponsable(Responsable $responsable): static
+    {
+        if ($this->responsable->removeElement($responsable)) {
+            // set the owning side to null (unless already changed)
+            if ($responsable->getQuotientFamilial() === $this) {
+                $responsable->setQuotientFamilial(null);
+            }
+        }
 
         return $this;
     }
