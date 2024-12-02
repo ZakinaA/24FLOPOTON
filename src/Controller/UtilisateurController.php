@@ -7,11 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\Cours;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Form\CoursType;
-use App\Form\CoursModifierType;
 use App\Form\UserEditType;
 
 #[Route('/utilisateur', name: 'app_utilisateur_')]
