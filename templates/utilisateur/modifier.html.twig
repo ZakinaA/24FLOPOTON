@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{{ form_start(form) }}
+    <h2>Modifier les informations de l'utilisateur</h2>
+    {{ form_row(form.username) }}
+    {{ form_row(form.roles) }}
+    {#{ form_row(form.password) }#}
+    
+    {#% if form.responsable is defined %}
+        <h3>Modifier les informations du responsable</h3>
+        {{ form_start(form.responsable) }}
+            {{ form_row(form.responsable.nom) }}
+            {{ form_row(form.responsable.prenom) }}
+            {{ form_row(form.responsable.numRue) }}
+            {{ form_row(form.responsable.rue) }}
+            {{ form_row(form.responsable.copos) }}
+            {{ form_row(form.responsable.ville) }}
+            {{ form_row(form.responsable.tel) }}
+            {{ form_row(form.responsable.mail) }}
+        {{ form_end(form.responsable) }}
+    {% else %}
+        <h2>Aucunes données de responsable</h2>
+    {% endif %}
+    {{ form_row(form.save) }#}
+{{ form_end(form) }}
+{% endblock %}
