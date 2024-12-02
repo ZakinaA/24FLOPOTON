@@ -49,10 +49,17 @@ class Instrument
     #[ORM\ManyToMany(targetEntity: Modele::class, inversedBy: 'instruments')]
     private Collection $modele;
 
+    /**
+     * @var Collection<int, Contrat>
+     */
+    #[ORM\OneToMany(targetEntity: Contrat::class, mappedBy: 'instrument')]
+    private Collection $contrats;
+
     public function __construct()
     {
         $this->accessoire = new ArrayCollection();
         $this->modele = new ArrayCollection();
+        $this->contrats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +201,36 @@ class Instrument
     public function removeModele(Modele $modele): static
     {
         $this->modele->removeElement($modele);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contrat>
+     */
+    public function getContrats(): Collection
+    {
+        return $this->contrats;
+    }
+
+    public function addContrat(Contrat $contrat): static
+    {
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+            $contrat->setInstrument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContrat(Contrat $contrat): static
+    {
+        if ($this->contrats->removeElement($contrat)) {
+            // set the owning side to null (unless already changed)
+            if ($contrat->getInstrument() === $this) {
+                $contrat->setInstrument(null);
+            }
+        }
 
         return $this;
     }

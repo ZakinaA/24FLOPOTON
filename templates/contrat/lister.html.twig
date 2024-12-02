@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block javascripts %}{% endblock %}
+		
+		LISTE DES CONTRATS</br><br>
+		<table width="100%" border="2" cellspacing="1" cellpadding="10">
+        <tr>
+	        <td>Identifiant</td>
+	        <td>Nom de l'instrument</td>
+	        <td>Identifiant de l'instrument</td>
+	        <td>Prenom de l'élève</td>
+	        <td>Nom de l'élève</td>
+	        <td>Date de début</td>
+	        <td>Date de fin</td>
+	        <td>État avant le prêt</td>
+	        <td>État après le prêt</td>
+        </tr>
+		{% for i in pContrats %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.instrument.TypeInstrument.libelle }}</td>
+            <td>{{ i.instrument.id }}</td>
+            <td>{{ i.eleve.prenom }}</td>
+            <td>{{ i.eleve.nom }}</td>
+            <td>{{ i.dateDebut|date("m/d/Y") }}</td>
+            <td>{{ i.dateFin|date("m/d/Y") }}</td>            
+            <td>{{ i.etatDetailleDebut }}</td>
+            <td>{{ i.etatDetailleFin }}</td>
+        </tr>
+	{% else %}
+		<tr>
+		<td>Aucun contrat n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+        </table>
+    </body>
+{% endblock %}

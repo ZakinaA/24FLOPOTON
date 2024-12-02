@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EleveRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EleveRepository::class)]
@@ -36,6 +38,17 @@ class Eleve
 
     #[ORM\Column(length: 70)]
     private ?string $mail = null;
+
+    /**
+     * @var Collection<int, Contrat>
+     */
+    #[ORM\OneToMany(targetEntity: Contrat::class, mappedBy: 'eleve')]
+    private Collection $contrats;
+
+    public function __construct()
+    {
+        $this->contrats = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +147,36 @@ class Eleve
     public function setMail(string $mail): static
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contrat>
+     */
+    public function getContrats(): Collection
+    {
+        return $this->contrats;
+    }
+
+    public function addContrat(Contrat $contrat): static
+    {
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+            $contrat->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContrat(Contrat $contrat): static
+    {
+        if ($this->contrats->removeElement($contrat)) {
+            // set the owning side to null (unless already changed)
+            if ($contrat->getEleve() === $this) {
+                $contrat->setEleve(null);
+            }
+        }
 
         return $this;
     }
