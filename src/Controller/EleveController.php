@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Eleve;
+use App\Form\EleveType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -29,5 +31,25 @@ class EleveController extends AbstractController
         return $this->render('eleve/lister.html.twig', [
             'pEleves' => $eleves,
         ]); 
+    }
+    
+    #[Route('/ajouter', name: 'ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request){
+        $eleves = new Eleve();
+        $form = $this->createForm(EleveType::class, $eleves);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $eleves = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($eleves);
+            $entityManager->flush();
+            
+            //return $this->render('eleve/lister.html.twig', ['eleves' => $eleves,]);
+            return $this->redirectToRoute('app_eleve_lister');
+        } else  {
+            return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(),));
+        }
     }
 }
