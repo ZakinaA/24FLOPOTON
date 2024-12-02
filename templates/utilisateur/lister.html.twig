@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block javascripts %}{% endblock %}
+		
+		<h1>LISTE DES UTILISATEURS <a type="button" class="btn btn-success" href={#{ path('app_utilisateur_ajouter') }#}>Ajouter</a></h1>
+		</br></br>
+		<table width="60%" border="2" cellspacing="1" cellpadding="10">
+		
+		<thead>
+			<tr>
+				<th>Nom d'utilisateur</th>
+				<th>Rôles</th>
+				<th>Responsable</th>
+				<th>Action</th>
+			</tr>
+    	</thead>
+		{% for u in users %}
+		<tr>
+			<td><a href={#{ path('app_utilisateur_consulter', { 'id': u.id }) }#}>{{ u.username }}</a></td>
+			<td>
+				<ul>
+					{% for role in u.roles %}
+						<li>{{ role }}</li>
+					{% endfor %}
+				</ul>
+			</td>
+			<td>
+				<input type="checkbox" id="scales" name="scales" class="" {% if u.responsable %} checked{% endif %}/>
+			</td>
+			<td>
+				<a class="btn btn-primary" type="button" href={#{ path('app_utilisateur_modifier', {'id': u.id}) }#}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={#{ path('app_utilisateur_supprimer', {'id': u.id}) }#}>Supprimer</a>
+			</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td>Aucun utilisateur n'a été trouvé.</td>
+		</tr>
+		{% endfor %}
+		</table>
+{% endblock %}
