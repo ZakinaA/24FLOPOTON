@@ -46,4 +46,23 @@ class InstrumentController extends AbstractController
             'instruments' => $instruments,
             'intervention' => $intervention]);
     }
+
+    #[Route('/ajouter', name: 'ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request){
+        $instrument = new Instrument();
+        $form = $this->createForm(InstrumentType::class, $instrument);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $instrument = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($instrument);
+            $entityManager->flush();
+            
+            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,]);
+        } else  {
+            return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+        }
+    }
 }
