@@ -33,6 +33,18 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
+    #[Route('/consulter/{id<\d+>}', name: 'consulter')]
+    public function consulterCours(ManagerRegistry $doctrine, int $id){
+        $u = $doctrine->getRepository(User::class)->find($id);
+
+        if (!$u) {
+            throw $this->createNotFoundException('Aucun utilisateur trouvé avec le numéro '.$id);
+        }
+
+        return $this->render('utilisateur/consulter.html.twig', [
+            'u' => $u
+        ]);
+    }
     
     #[Route('/modifier/{id<\d+>}', name: 'modifier')]
     public function modifier(ManagerRegistry $doctrine, $id, Request $request, UserPasswordHasherInterface $hasher){
