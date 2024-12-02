@@ -21,7 +21,7 @@ class EleveModifierType extends AbstractType
             ->add('ville')
             ->add('tel')
             ->add('mail')
-            ->add('enregistrer', SubmitType::class, options: array('label' => 'Ajouter'))
+            ->add('enregistrer', SubmitType::class, options: array('label' => 'Modifier'))
         ;
     }
 
