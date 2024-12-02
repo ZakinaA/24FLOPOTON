@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contrat;
+use App\Form\ContratModifierType;
 use App\Form\ContratType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,4 +53,32 @@ class ContratController extends AbstractController
             return $this->render('contrat/ajouter.html.twig', array('form' => $form->createView(),));
         }
     }
+    #[Route('/modifier/{id}', name: 'modifier')]
+
+    public function modifierContrats(ManagerRegistry $doctrine, $id, Request $request){
+ 
+        $contrats = $doctrine->getRepository(Contrat::class)->find($id);
+     
+        if (!$contrats) {
+            throw $this->createNotFoundException('Aucun contrats trouvé avec le numéro '.$id);
+        }
+        else
+        {
+                $form = $this->createForm(ContratModifierType::class, $contrats);
+                $form->handleRequest($request);
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+     
+                     $contrats = $form->getData();
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($contrats);
+                     $entityManager->flush();
+                     //return $this->render('contrat/lister.html.twig', ['contrats' => $contrats,]);
+                     return $this->redirectToRoute('app_contrat_lister');
+               }
+               else{
+                    return $this->render('contrat/ajouter.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
 }
