@@ -27,12 +27,11 @@
 			<td><a href="{{ path('app_cours_consulter', { 'id': i.cours.id }) }}">{{ i.cours.libelle }}</a></td>
 			<td>{{ i.eleve.prenom }} {{ i.eleve.nom }}</td>
 			<td>{{ i.dateInscription|date('m/d/Y') }}</td>
-            {#
+            
             <td>
-				<a class="btn btn-primary" type="button" href={{ path('app_inscription_modifier', {'id': i.id}) }}>Modifier</a>
-				<a class="btn btn-danger" type="button" href={{ path('app_inscription_supprimer', {'id': i.id}) }}>Supprimer</a>
+				<a class="btn btn-primary" type="button" href={{ path('app_inscription_modifier', {'id': i.id}) }}>Modifier</a>{#
+				<a class="btn btn-danger" type="button" href={{ path('app_inscription_supprimer', {'id': i.id}) }}>Supprimer</a>#}
 			</td>
-            #}
 		</tr>
 	{% else %}
 		<tr>

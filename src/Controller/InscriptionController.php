@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Inscription;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\InscriptionType;
-use App\Form\CoursModifierType;
+use App\Form\InscriptionModifierType;
 
 #[Route(path: '/inscription', name: 'app_inscription_')]
 
@@ -52,4 +52,33 @@ class InscriptionController extends AbstractController
             return $this->render('inscription/ajouter.html.twig', array('form' => $form->createView(),));
         }
     }
+    
+    #[Route('/modifier/{id}', name: 'modifier')]
+
+    public function modifierInscription(ManagerRegistry $doctrine, $id, Request $request){
+ 
+
+        $inscription = $doctrine->getRepository(Inscription::class)->find($id);
+     
+        if (!$inscription) {
+            throw $this->createNotFoundException('Aucune inscription trouvé avec le numéro '.$id);
+        }
+        else
+        {
+                $form = $this->createForm(InscriptionModifierType::class, $inscription);
+                $form->handleRequest($request);
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+     
+                     $inscription = $form->getData();
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($inscription);
+                     $entityManager->flush();
+                     return $this->redirectToRoute('app_inscription_lister');
+               }
+               else{
+                    return $this->render('inscription/ajouter.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
 }
