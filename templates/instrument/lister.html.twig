@@ -8,19 +8,27 @@
     <body>
         {% block javascripts %}{% endblock %}
 		
-		LISTE DES INSTRUMENTS</br>
-		<table>
+		<h1>LISTE DES INSTRUMENTS</h1></br>
+		<table width="60%" border="2" cellspacing="1" cellpadding="10">
+
+        <thead>
+        <tr>
+            <th>Numéro de série</th>
+            <th>Utilisation</th>
+            <th>Couleur</th>
+            <th>Marque</th>
+            <th>Type d'Instrument</th>
+        </tr>
+    </thead>
+
 		{% for i in iInstrument %}
 		<tr>
-			<td>{{ i.numSerie }}</td>
-            <td>{{ i.dateAchat|date("d/m/Y") }}</td>
-            <td>{{ i.prixAchat }}</td>
+			<td><a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">{{ i.numSerie }}</a></td>
             <td>{{ i.utilisation }}</td>
             <td>{{ i.couleur }}</td>
             <td>{{ i.marque.libelle }}</td>
-            <td>{{ i.modele.nom }}</td>
             <td>{{ i.typeInstrument.libelle }}</td>
-
+        </tr>
 	{% else %}
 		<tr>
 		<td>Aucun modèle n'a été trouvé.</td>
