@@ -63,6 +63,8 @@ class SecurityController extends AbstractController
 
             $responsable = $user->getResponsable();
             if ($responsable && $responsable->getNom() && $responsable->getPrenom()) {
+                $responsable->setNom(strtoupper($responsable->getNom()));
+                $responsable->setPrenom(ucfirst($responsable->getPrenom()));
                 $em->persist($responsable);
             }
 
