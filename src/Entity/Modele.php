@@ -21,7 +21,7 @@ class Modele
     /**
      * @var Collection<int, Instrument>
      */
-    #[ORM\ManyToMany(targetEntity: Instrument::class, mappedBy: 'modele')]
+    #[ORM\OneToMany(targetEntity: Instrument::class, mappedBy: 'modele')]
     private Collection $instruments;
 
     public function __construct()
@@ -58,7 +58,7 @@ class Modele
     {
         if (!$this->instruments->contains($instrument)) {
             $this->instruments->add($instrument);
-            $instrument->addModele($this);
+            $instrument->setModele($this);
         }
 
         return $this;
@@ -67,9 +67,13 @@ class Modele
     public function removeInstrument(Instrument $instrument): static
     {
         if ($this->instruments->removeElement($instrument)) {
-            $instrument->removeModele($this);
+            // set the owning side to null (unless already changed)
+            if ($instrument->getModele() === $this) {
+                $instrument->setModele(null);
+            }
         }
 
         return $this;
     }
+
 }
