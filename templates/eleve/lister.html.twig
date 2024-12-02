@@ -9,19 +9,19 @@
     <body>
         {% block javascripts %}{% endblock %}
 		
-		<h1>LISTE DES ÉLÈVES <a type="button" class="btn btn-success" href={#{ path('app_eleve_ajouter') }#}>Ajouter</a></h1><br><br>
+		<h1>LISTE DES ÉLÈVES <a type="button" class="btn btn-success" href={{ path('app_eleve_ajouter') }}>Ajouter</a></h1><br><br>
 		<table width="90%" border="2" cellspacing="1" cellpadding="10">
         <tr>
-	        <th>Identifiant</th>
-	        <th>Nom</th>
-	        <th>Prenom</th>
-	        <th>Numéro de rue</th>
-	        <th>Rue</th>
-	        <th>Code Postal</th>
-	        <th>Ville</th>
-	        <th>Téléphone</th>
-            <th>Mail</th>
-            <th>Action</th>
+	        <th>Identifiant </th>
+	        <th>Nom </th>
+	        <th>Prenom </th>
+	        <th>Numéro de rue </th>
+	        <th>Rue </th>
+	        <th>Code Postal </th>
+	        <th>Ville </th>
+	        <th>Téléphone </th>
+            <th>Mail </th>
+            <th>Action </th>
         </tr>
 		{% for i in pEleves %}
         <tr>
