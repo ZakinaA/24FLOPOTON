@@ -8,7 +8,7 @@
     <body>
         {% block javascripts %}{% endblock %}
 		
-		<h1>LISTE DES COURS</h1></br></br>
+		<h1>LISTE DES COURS <a type="button" class="btn btn-success" href={{ path('app_cours_ajouter') }}>Ajouter</a></h1></br></br>
 		<table width="60%" border="2" cellspacing="1" cellpadding="10">
 		
 		<thead>
@@ -21,7 +21,7 @@
             <th>Jour</th>
             <th>Professeur</th>
 			<th>Type Cours</th>
-
+			<th>Action</th>
         </tr>
     </thead>
 		
@@ -36,6 +36,10 @@
 			<td>{{ c.jour.libelle }}</td>
 			<td>{{ c.professeur.prenom }} {{ c.professeur.nom }}</td>
 			<td>{{ c.typeCours.libelle }}</td>
+			<td>
+				<a class="btn btn-primary" type="button" href={{ path('app_cours_modifier', {'id': c.id}) }}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={{ path('app_cours_supprimer', {'id': c.id}) }}>Supprimer</a>
+			</td>
 		</tr>
 	{% else %}
 		<tr>
