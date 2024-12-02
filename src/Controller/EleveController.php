@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Eleve;
+use App\Form\EleveModifierType;
 use App\Form\EleveType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +33,7 @@ class EleveController extends AbstractController
             'pEleves' => $eleves,
         ]); 
     }
-    
+
     #[Route('/ajouter', name: 'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){
         $eleves = new Eleve();
@@ -52,4 +53,32 @@ class EleveController extends AbstractController
             return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(),));
         }
     }
+    #[Route('/modifier/{id}', name: 'modifier')]
+
+    public function modifierEleves(ManagerRegistry $doctrine, $id, Request $request){
+ 
+        $eleves = $doctrine->getRepository(Eleve::class)->find($id);
+     
+        if (!$eleves) {
+            throw $this->createNotFoundException('Aucun eleves trouvé avec le numéro '.$id);
+        }
+        else
+        {
+                $form = $this->createForm(EleveModifierType::class, $eleves);
+                $form->handleRequest($request);
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+     
+                     $eleves = $form->getData();
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($eleves);
+                     $entityManager->flush();
+                     //return $this->render('eleve/lister.html.twig', ['eleves' => $eleves,]);
+                     return $this->redirectToRoute('app_eleve_lister');
+               }
+               else{
+                    return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
 }

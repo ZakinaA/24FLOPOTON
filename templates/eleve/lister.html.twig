@@ -35,7 +35,7 @@
             <td>{{ i.tel }}</td>
             <td>{{ i.mail }}</td>
 			<td>
-				<a class="btn btn-primary" type="button" href={#{ path('app_eleve_modifier', {'id': i.id}) }#}>Modifier</a>
+				<a class="btn btn-primary" type="button" href={{ path('app_eleve_modifier', {'id': i.id}) }}>Modifier</a>
 				<a class="btn btn-danger" type="button" href={#{ path('app_eleve_supprimer', { 'id': i.id }) }#} onclick="return  confirm('Êtes vous sur de vouloir supprimer cet élève ?')">Supprimer</a>
 			</td>
             
