@@ -81,4 +81,20 @@ class ContratController extends AbstractController
                }
             }
      }
+    #[Route('/supprimer/{id}', name: 'supprimer')]
+
+    public function supprimer(ManagerRegistry $doctrine, int $id): Response
+    {
+        $contrat = $doctrine->getRepository(Contrat::class)->find($id);
+
+        if (!$contrat) {
+            throw $this->createNotFoundException('Aucune contrat trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($contrat); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_contrat_lister');
+    }
 }
