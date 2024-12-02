@@ -81,4 +81,20 @@ class EleveController extends AbstractController
                }
             }
      }
+     #[Route('/supprimer/{id}', name: 'supprimer')]
+
+    public function supprimer(ManagerRegistry $doctrine, int $id): Response
+    {
+        $eleve = $doctrine->getRepository(Eleve::class)->find($id);
+
+        if (!$eleve) {
+            throw $this->createNotFoundException('Aucune eleve trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($eleve); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_eleve_lister');
+    }
 }
