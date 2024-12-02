@@ -8,7 +8,7 @@
     <body>
         {% block javascripts %}{% endblock %}
 		
-		LISTE DES COURS</br></br>
+		<h1>LISTE DES COURS</h1></br></br>
 		<table width="60%" border="2" cellspacing="1" cellpadding="10">
 		
 		<thead>
@@ -20,6 +20,7 @@
             <th>Type d'Instrument</th>
             <th>Jour</th>
             <th>Professeur</th>
+			<th>Type Cours</th>
 
         </tr>
     </thead>
@@ -34,6 +35,7 @@
 			<td>{{ c.typeInstrument.libelle }}</td>
 			<td>{{ c.jour.libelle }}</td>
 			<td>{{ c.professeur.prenom }} {{ c.professeur.nom }}</td>
+			<td>{{ c.typeCours.libelle }}</td>
 		</tr>
 	{% else %}
 		<tr>
