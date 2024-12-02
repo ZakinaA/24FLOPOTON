@@ -37,7 +37,6 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/gestionnaire, roles: ROLE_GESTIONNAIRE }
         - { path: ^/respeleve, roles: ROLE_RESPELEVE }
-        - { path: ^/eleve, roles: ROLE_ELEVE }
         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
