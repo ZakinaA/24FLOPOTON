@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/contrat', name: 'contrat')]
+#[Route('/contrat', name: 'app_contrat_')]
 
 class ContratController extends AbstractController
 {
