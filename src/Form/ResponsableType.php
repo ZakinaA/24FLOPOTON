@@ -18,8 +18,12 @@ class ResponsableType extends AbstractType
     {
         $builder
             ->setMethod("POST")
-            ->add('nom', TextType::class)
-            ->add('prenom', TextType::class)
+            ->add('nom', TextType::class, [
+                'label' => 'Nom',
+            ])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom',
+            ])
             ->add('numRue', IntegerType::class, [
                 'required'   => false,
                 'attr' => ['max' => 999]

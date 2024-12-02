@@ -11,19 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-
-
 #[Route('/contrat', name: 'app_contrat_')]
-
 class ContratController extends AbstractController
 {
-    #[Route('/index', name: 'index')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('contrat/index.html.twig', [
-            'controller_name' => 'ContratController',
-        ]);
+        return $this->redirectToRoute('app_contrat_lister');
     }
+    
     #[Route('/lister', name: 'lister')]
     public function lister(ManagerRegistry $doctrine)
     {
