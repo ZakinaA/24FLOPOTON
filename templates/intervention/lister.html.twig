@@ -9,20 +9,33 @@
     <body>
         {% block javascripts %}{% endblock %}
 		
-		LISTE DES INTERVENTIONS</br>
-		<table>
+		<h1>LISTE DES INTERVENTIONS <a type="button" class="btn btn-success" href={{ path('app_intervention_ajouter') }}>Ajouter</a></h1></br><br>
+        <table width="70%" border="2" cellspacing="1" cellpadding="10">
+        <tr>
+	        <th>Identifiant</th>
+	        <th>Nom du professtionnel</th>
+	        <th>Nom de l'instrument</th>
+	        <th>Date de début</th>
+	        <th>Date de fin</th>
+	        <th>Descriptif</th>
+	        <th>Prix</th>
+	        <th>quotité</th>
+            <th>Action</th>
+        </tr>
 		{% for i in pInterventions %}
 		<tr>
             <td>{{ i.id }}</td>
             <td>{{ i.professionnel.nom }}</td>
-            {# <td>{{ i.instrument.libelle }}</td> #}
+            <td>{{ i.instrument.typeInstrument.libelle }}</td> 
             <td>{{ i.dateDebut|date("m/d/Y") }}</td>
             <td>{{ i.dateFin|date("m/d/Y") }}</td>            
             <td>{{ i.descriptif }}</td>
             <td>{{ i.prix }}</td>
             <td>{{ i.quotite }}</td>
-    <td><a href="{{ path('app_intervention_supprimer', { 'id': i.id }) }}" onclick="return  confirm('Êtes vous sur de vouloir supprimer cette intervention ?')">Supprimer</a></td>
-
+            <td>
+                <a class="btn btn-primary" type="button" href={{ path('app_intervention_modifier', {'id': i.id}) }}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={{ path('app_intervention_supprimer', { 'id': i.id }) }} onclick="return confirm('Êtes vous sur de vouloir supprimer cette intervention ?')">Supprimer</a>
+			</td>
 	{% else %}
 		<tr>
 		<td>Aucune intervention n'a été trouvé.</td>

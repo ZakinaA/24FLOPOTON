@@ -44,21 +44,17 @@ class Instrument
     private Collection $accessoire;
 
     /**
-     * @var Collection<int, Modele>
-     */
-    #[ORM\ManyToMany(targetEntity: Modele::class, inversedBy: 'instruments')]
-    private Collection $modele;
-
-    /**
      * @var Collection<int, Contrat>
      */
     #[ORM\OneToMany(targetEntity: Contrat::class, mappedBy: 'instrument')]
     private Collection $contrats;
 
+    #[ORM\ManyToOne(inversedBy: 'instruments')]
+    private ?Modele $modele = null;
+
     public function __construct()
     {
         $this->accessoire = new ArrayCollection();
-        $this->modele = new ArrayCollection();
         $this->contrats = new ArrayCollection();
     }
 
@@ -182,30 +178,6 @@ class Instrument
     }
 
     /**
-     * @return Collection<int, Modele>
-     */
-    public function getModele(): Collection
-    {
-        return $this->modele;
-    }
-
-    public function addModele(Modele $modele): static
-    {
-        if (!$this->modele->contains($modele)) {
-            $this->modele->add($modele);
-        }
-
-        return $this;
-    }
-
-    public function removeModele(Modele $modele): static
-    {
-        $this->modele->removeElement($modele);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Contrat>
      */
     public function getContrats(): Collection
@@ -231,6 +203,18 @@ class Instrument
                 $contrat->setInstrument(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getModele(): ?Modele
+    {
+        return $this->modele;
+    }
+
+    public function setModele(?Modele $modele): static
+    {
+        $this->modele = $modele;
 
         return $this;
     }

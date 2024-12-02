@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block javascripts %}{% endblock %}
+		
+		<h1>LISTE DES INSCRIPTIONS AUX COURS <a type="button" class="btn btn-success" href={{ path('app_cours_ajouter') }}>Ajouter</a></h1></br></br>
+		<table width="60%" border="2" cellspacing="1" cellpadding="10">
+		
+		<thead>
+        <tr>
+            <th>Nom du Cours</th>
+            <th>Nom de l'Eleve</th>
+            <th>Date de l'Inscription</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+		
+		{% for i in pInscription %}
+
+		<tr>
+			<td><a href="{{ path('app_cours_consulter', { 'id': i.cours.id }) }}">{{ i.cours.libelle }}</a></td>
+			<td>{{ i.eleve.prenom }} {{ i.eleve.nom }}</td>
+			<td>{{ i.dateInscription|date('m/d/Y') }}</td>
+            <td>
+				<a class="btn btn-primary" type="button" href={{ path('app_cours_modifier', {'id': i.id}) }}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={{ path('app_cours_supprimer', {'id': i.id}) }}>Supprimer</a>
+			</td>
+		
+		</tr>
+	{% else %}
+		<tr>
+		<td>Aucun cours n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+</table>
+{% endblock %}

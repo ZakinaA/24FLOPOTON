@@ -37,6 +37,20 @@ class Cours
     #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?Jour $Jour = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cours')]
+    private ?TypeCours $typecours = null;
+
+    /**
+     * @var Collection<int, Inscription>
+     */
+    #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'cours')]
+    private Collection $inscriptions;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +133,48 @@ class Cours
     public function setJour(?Jour $Jour): static
     {
         $this->Jour = $Jour;
+
+        return $this;
+    }
+
+    public function getTypecours(): ?TypeCours
+    {
+        return $this->typecours;
+    }
+
+    public function setTypecours(?TypeCours $typecours): static
+    {
+        $this->typecours = $typecours;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): static
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+            $inscription->setCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): static
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getCours() === $this) {
+                $inscription->setCours(null);
+            }
+        }
 
         return $this;
     }

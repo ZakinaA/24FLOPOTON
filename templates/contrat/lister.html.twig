@@ -9,18 +9,19 @@
     <body>
         {% block javascripts %}{% endblock %}
 		
-		LISTE DES CONTRATS</br><br>
-		<table width="100%" border="2" cellspacing="1" cellpadding="10">
+		<h1>LISTE DES CONTRATS <a type="button" class="btn btn-success" href={{ path('app_contrat_ajouter') }}>Ajouter</a></h1><br><br>
+		<table width="90%" border="2" cellspacing="1" cellpadding="10">
         <tr>
-	        <td>Identifiant</td>
-	        <td>Nom de l'instrument</td>
-	        <td>Identifiant de l'instrument</td>
-	        <td>Prenom de l'élève</td>
-	        <td>Nom de l'élève</td>
-	        <td>Date de début</td>
-	        <td>Date de fin</td>
-	        <td>État avant le prêt</td>
-	        <td>État après le prêt</td>
+	        <th>Identifiant</th>
+	        <th>Nom de l'instrument</th>
+	        <th>Identifiant de l'instrument</th>
+	        <th>Prenom de l'élève</th>
+	        <th>Nom de l'élève</th>
+	        <th>Date de début</th>
+	        <th>Date de fin</th>
+	        <th>État avant le prêt</th>
+	        <th>État après le prêt</th>
+            <th>Action</th>
         </tr>
 		{% for i in pContrats %}
         <tr>
@@ -33,6 +34,11 @@
             <td>{{ i.dateFin|date("m/d/Y") }}</td>            
             <td>{{ i.etatDetailleDebut }}</td>
             <td>{{ i.etatDetailleFin }}</td>
+			<td>
+				<a class="btn btn-primary" type="button" href={{ path('app_contrat_modifier', {'id': i.id}) }}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={{ path('app_contrat_supprimer', { 'id': i.id }) }} onclick="return  confirm('Êtes vous sur de vouloir supprimer ce contrat ?')">Supprimer</a>
+			</td>
+            
         </tr>
 	{% else %}
 		<tr>
