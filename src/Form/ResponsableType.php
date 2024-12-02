@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\QuotientFamilial;
 use App\Entity\Responsable;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -44,6 +46,10 @@ class ResponsableType extends AbstractType
             ])
             ->add('mail', EmailType::class, [
                 'required'   => false,
+            ])
+            ->add('quotientfamilial', EntityType::class, [
+                'class' => QuotientFamilial::class,
+                'choice_label' => 'libelle',
             ])
         ;
     }
