@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <head>
+        
+    </head>
+    <body>       
+		<h3>PAGE DE CONSULTATION D'UN INSTRUMENT</h3>
+        
+  <table> 
+  	    <tr><td><b>{{ instruments.typeInstrument.libelle}}</b></td></tr>
+	    <tr><td>Date d'achat : </td><td>{{ instruments.dateAchat|date("d/m/Y") }}</td></tr>
+	    <tr><td>Prix d'achat : </td><td>{{ instruments.prixAchat }}</td></tr>
+        <tr><td>Marque : </td><td>{{ instruments.marque.libelle }} Modele : </td><td>{{ instruments.modele.nom }}</td>
+        <td  rowspan="8" class="imgIns">
+					        {% set photo = 'image/instrument/'~ instruments.id ~'.jpg' %}
+					        <span class="zoom"><img src="{{ asset(photo | trans )}}"/></span></td></tr>
+        <tr><td>Numéro de série : </td><td>{{ instruments.numSerie }} </td></tr>
+	    <tr><td>Couleur dominante : </td><td>{{ instruments.couleur }}</td></tr>
+        <tr><td>Utilisation : </td><td>{{ instruments.utilisation }}</td></tr>
+ </table>
+ 
+ <h3>INTERVENTIONS</h3>
+   <table width="60%" border="2" cellspacing="1" cellpadding="10">
+
+        <thead>
+        <tr>
+            <th>Intervenant</th>
+            <th>Numéro de série</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Adresse intervenant</th>
+            <th>Type d'Instrument</th>
+            <th>Prix</th>
+        </tr>
+    </thead>
+
+ {% for intervention in intervention %}
+    <tr>
+		<td>{{ intervention.professionnel.nom }}</td>
+        <td>{{ intervention.instrument.numserie }}</td>
+		<td>{{ intervention.dateDebut|date("m/d/Y") }}</td> 
+        <td>{{ intervention.dateFin|date("m/d/Y") }}</td>
+		<td>{{ intervention.professionnel.rue }} {{ intervention.professionnel.nomrue }} {{ intervention.professionnel.copos }}</td>
+        <td>{{ intervention.descriptif }}</td>
+        <td>{{ intervention.prix }}</td>
+
+	{% else %}
+		<tr>
+		<td>Aucun modèle n'a été trouvé.</td>
+		</tr>
+ {% endfor %}
+    </table>
+
+
+<br>
+{% endblock %}
