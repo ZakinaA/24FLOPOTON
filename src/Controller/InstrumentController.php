@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Instrument;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\InstrumentType;
+
 
 #[Route('/instrument', name: 'app_instrument_')]
 class InstrumentController extends AbstractController
