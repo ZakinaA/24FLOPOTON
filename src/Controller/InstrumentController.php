@@ -9,6 +9,8 @@ use App\Entity\Instrument;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\InstrumentType;
+use App\Form\InstrumentModifierType;
+
 
 
 #[Route('/instrument', name: 'app_instrument_')]
@@ -91,8 +93,8 @@ class InstrumentController extends AbstractController
                      $entityManager = $doctrine->getManager();
                      $entityManager->persist($instrument);
                      $entityManager->flush();
-                     return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,]);
-               }
+                     return $this->redirectToRoute('app_instrument_lister', ['id' => $instrument->getId()]);
+                    }
                else{
                     return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
                }
