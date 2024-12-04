@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ResponsableRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,6 +42,17 @@ class Responsable
 
     #[ORM\ManyToOne(inversedBy: 'responsable')]
     private ?QuotientFamilial $quotientFamilial = null;
+
+    /**
+     * @var Collection<int, Eleve>
+     */
+    #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'responsable')]
+    private Collection $eleve;
+
+    public function __construct()
+    {
+        $this->eleve = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +163,36 @@ class Responsable
     public function setQuotientFamilial(?QuotientFamilial $quotientFamilial): static
     {
         $this->quotientFamilial = $quotientFamilial;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Eleve>
+     */
+    public function getEleve(): Collection
+    {
+        return $this->eleve;
+    }
+
+    public function addEleve(Eleve $eleve): static
+    {
+        if (!$this->eleve->contains($eleve)) {
+            $this->eleve->add($eleve);
+            $eleve->setResponsable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEleve(Eleve $eleve): static
+    {
+        if ($this->eleve->removeElement($eleve)) {
+            // set the owning side to null (unless already changed)
+            if ($eleve->getResponsable() === $this) {
+                $eleve->setResponsable(null);
+            }
+        }
 
         return $this;
     }

@@ -51,6 +51,9 @@ class Eleve
     #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'eleve')]
     private Collection $inscriptions;
 
+    #[ORM\ManyToOne(inversedBy: 'eleve')]
+    private ?Responsable $responsable = null;
+
     public function __construct()
     {
         $this->contrats = new ArrayCollection();
@@ -214,6 +217,18 @@ class Eleve
                 $inscription->setEleve(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getResponsable(): ?Responsable
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?Responsable $responsable): static
+    {
+        $this->responsable = $responsable;
 
         return $this;
     }
