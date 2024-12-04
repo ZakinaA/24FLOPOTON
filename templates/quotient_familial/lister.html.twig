@@ -25,7 +25,7 @@
 			<td><a>{{ q.quotientMini }}</a></td>
 			<td>
 				<a class="btn btn-primary" type="button" href={{ path('app_quotientfamilial_modifier', {'id': q.id}) }}>Modifier</a>
-				<a class="btn btn-danger" type="button" href={#{ path('app_quotientfamilial_supprimer', {'id': q.id}) }#}>Supprimer</a>
+				<a class="btn btn-danger" type="button" href={{ path('app_quotientfamilial_supprimer', { 'id': q.id }) }} onclick="return  confirm('Êtes vous sur de vouloir supprimer ce quotient familial ?')">Supprimer</a>
 			</td>
 		</tr>
 		{% else %}

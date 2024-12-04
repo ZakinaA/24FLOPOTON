@@ -70,4 +70,20 @@ class QuotientFamilialController extends AbstractController
 
         return $this->render('quotient_familial/modifier.html.twig', ['form' => $form->createView()]);
     }
+
+    #[Route('/supprimer/{id<\d+>}', name: 'supprimer')]
+     public function supprimer(ManagerRegistry $doctrine, int $id): Response
+     {
+        $q = $doctrine->getRepository(QuotientFamilial::class)->find($id);
+
+        if (!$q) {
+            throw $this->createNotFoundException('Aucun quotient familial trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($q); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_quotientfamilial_lister');
+     }
 }
