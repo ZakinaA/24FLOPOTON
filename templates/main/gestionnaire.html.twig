@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <h1>Gestionnaire</h1>
+    </br>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_cours_lister') }}>Gérer les Cours</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_contrat_lister') }}>Gérer les Contrats</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_inscription_lister') }}>Gérer les Inscriptions</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_intervention_lister') }}>Gérer les Interventions</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_eleve_lister') }}>Gérer les Élèves</a>
+        </li>
+    </ul>
+{% endblock %}

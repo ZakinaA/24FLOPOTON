@@ -34,9 +34,22 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/gestionnaire, roles: ROLE_GESTIONNAIRE }
-        - { path: ^/respeleve, roles: ROLE_RESPELEVE }
+        - { path: ^/utilisateur, roles: ROLE_ADMIN }
+        - { path: ^/typeinstrument, roles: ROLE_ADMIN }
+        - { path: ^/jour, roles: ROLE_ADMIN }
+        - { path: ^/accessoire, roles: ROLE_ADMIN }
+        - { path: ^/marque, roles: ROLE_ADMIN }
+        - { path: ^/modele, roles: ROLE_ADMIN }
+        - { path: ^/quotientfamilial, roles: ROLE_ADMIN }
+
+        - { path: ^/cours, roles: ROLE_GESTIONNAIRE }
+        - { path: ^/contrat, roles: ROLE_GESTIONNAIRE }
+        - { path: ^/inscription, roles: ROLE_GESTIONNAIRE }
+        - { path: ^/intervention, roles: ROLE_GESTIONNAIRE }
+        - { path: ^/eleve, roles: ROLE_GESTIONNAIRE }
+
+        - { path: ^/facture, roles: ROLE_RESPELEVE }
+
         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
