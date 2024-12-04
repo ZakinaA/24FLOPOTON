@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Instrument;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\InstrumentType;
+
 
 #[Route('/instrument', name: 'app_instrument_')]
 class InstrumentController extends AbstractController
@@ -32,18 +35,38 @@ class InstrumentController extends AbstractController
     #[Route('/consulter/{id}', name: 'consulter')]
     public function consulterInstrument(ManagerRegistry $doctrine, int $id){
 
-        $instruments= $doctrine->getRepository(Instrument::class)->find($id);
+        $instrument= $doctrine->getRepository(Instrument::class)->find($id);
 
-        if (!$instruments) {
+        if (!$instrument) {
             throw $this->createNotFoundException(
             'Aucun instrument trouvé avec le numéro '.$id
             );
         }
 
-        $intervention = $instruments->getInterventions();
-        //return new Response('Instruments : '.$instruments->getLibelle());
+        $intervention = $instrument->getInterventions();
+        //return new Response('Instrument : '.$instruments->getLibelle());
         return $this->render('instrument/consulter.html.twig', [
-            'instruments' => $instruments,
-            'intervention' => $intervention]);
+            'instrument' => $instrument,
+            'intervention' => $intervention
+        ]);
+    }
+
+    #[Route('/ajouter', name: 'ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request){
+        $instrument = new Instrument();
+        $form = $this->createForm(InstrumentType::class, $instrument);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $instrument = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($instrument);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('app_instrument_consulter', ['id' => $instrument->getId()]);
+        } else  {
+            return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+        }
     }
 }

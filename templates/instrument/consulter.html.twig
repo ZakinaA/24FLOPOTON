@@ -7,19 +7,19 @@
 		<h3>PAGE DE CONSULTATION D'UN INSTRUMENT</h3>
         
   <table> 
-  	    <tr><td><b>{{ instruments.typeInstrument.libelle}}</b></td></tr>
-	    <tr><td>Date d'achat : </td><td>{{ instruments.dateAchat|date("d/m/Y") }}</td></tr>
-	    <tr><td>Prix d'achat : </td><td>{{ instruments.prixAchat }}</td></tr>
-        <tr><td>Marque : </td><td>{{ instruments.marque.libelle }} Modele : </td><td>{{ instruments.modele.nom }}</td>
+  	    <tr><td><b>{{ instrument.typeInstrument.libelle}}</b></td></tr>
+	    <tr><td>Date d'achat : </td><td>{{ instrument.dateAchat|date("d/m/Y") }}</td></tr>
+	    <tr><td>Prix d'achat : </td><td>{{ instrument.prixAchat }}</td></tr>
+        <tr><td>Marque : </td><td>{{ instrument.marque.libelle }} Modele : </td><td>{{ instrument.modele.nom }}</td>
         <td  rowspan="8" class="imgIns">
-					        {% set photo = 'image/instrument/'~ instruments.id ~'.jpg' %}
+					        {% set photo = 'image/instrument/'~ instrument.id ~'.jpg' %}
 					        <span class="zoom"><img src="{{ asset(photo | trans )}}"/></span></td></tr>
-        <tr><td>Numéro de série : </td><td>{{ instruments.numSerie }} </td></tr>
-	    <tr><td>Couleur dominante : </td><td>{{ instruments.couleur }}</td></tr>
-        <tr><td>Utilisation : </td><td>{{ instruments.utilisation }}</td></tr>
+        <tr><td>Numéro de série : </td><td>{{ instrument.numSerie }} </td></tr>
+	    <tr><td>Couleur dominante : </td><td>{{ instrument.couleur }}</td></tr>
+        <tr><td>Utilisation : </td><td>{{ instrument.utilisation }}</td></tr>
  </table>
  
- <h3>INTERVENTIONS</h3>
+ <h3>LISTE DES INTERVENTIONS</h3>
    <table width="60%" border="2" cellspacing="1" cellpadding="10">
 
         <thead>
@@ -33,8 +33,8 @@
             <th>Prix</th>
         </tr>
     </thead>
-
- {% for intervention in intervention %}
+ {% if instrument.interventions is not empty%}
+ {% for intervention in instrument.interventions %}
     <tr>
 		<td>{{ intervention.professionnel.nom }}</td>
         <td>{{ intervention.instrument.numserie }}</td>
@@ -49,6 +49,7 @@
 		<td>Aucun modèle n'a été trouvé.</td>
 		</tr>
  {% endfor %}
+  {% endif %}
     </table>
 
 
