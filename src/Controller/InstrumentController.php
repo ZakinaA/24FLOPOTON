@@ -52,18 +52,18 @@ class InstrumentController extends AbstractController
 
     #[Route('/ajouter', name: 'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){
-        $instrument = new Instrument();
-        $form = $this->createForm(InstrumentType::class, $instrument);
+        $instruments = new Instrument();
+        $form = $this->createForm(InstrumentType::class, $instruments);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $instrument = $form->getData();
+            $instruments = $form->getData();
 
             $entityManager = $doctrine->getManager();
-            $entityManager->persist($instrument);
+            $entityManager->persist($instruments);
             $entityManager->flush();
             
-            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,]);
+            return $this->render('instrument/consulter.html.twig', ['instruments' => $instruments,]);
         } else  {
             return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
         }
