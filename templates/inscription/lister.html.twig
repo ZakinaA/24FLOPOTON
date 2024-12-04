@@ -9,7 +9,7 @@
         {% block javascripts %}{% endblock %}
 		
 		<h1>LISTE DES INSCRIPTIONS AUX COURS <a type="button" class="btn btn-success" href={{ path('app_inscription_ajouter') }}>Ajouter</a></h1></br></br>
-		<table width="60%" border="2" cellspacing="1" cellpadding="10">
+		<table width="33%" border="2" cellspacing="1" cellpadding="10">
 		
 		<thead>
         <tr>
@@ -29,13 +29,13 @@
 			<td>{{ i.dateInscription|date('m/d/Y') }}</td>
             
             <td>
-				<a class="btn btn-primary" type="button" href={{ path('app_inscription_modifier', {'id': i.id}) }}>Modifier</a>{#
-				<a class="btn btn-danger" type="button" href={{ path('app_inscription_supprimer', {'id': i.id}) }}>Supprimer</a>#}
+				<a class="btn btn-primary" type="button" href={{ path('app_inscription_modifier', {'id': i.id}) }}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={{ path('app_inscription_supprimer', { 'id': i.id }) }} onclick="return  confirm('Êtes vous sur de vouloir supprimer cette inscription ?')">Supprimer</a>
 			</td>
 		</tr>
 	{% else %}
 		<tr>
-		<td>Aucun cours n'a été trouvé.</td>
+		<td>Aucune inscription n'a été trouvé.</td>
 		</tr>
 	{% endfor %}
 </table>
