@@ -26,17 +26,17 @@ class InstrumentType extends AbstractType
             ->add('couleur')
             ->add('typeInstrument', EntityType::class, [
                 'class' => TypeInstrument::class,
-                'choice_label' => 'id',
+                'choice_label' => 'libelle',
             ])
             ->add('marque', EntityType::class, [
                 'class' => Marque::class,
-                'choice_label' => 'id',
+                'choice_label' => 'libelle',
             ])
             ->add('modele', EntityType::class, [
                 'class' => Modele::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
-            ->add('enregistrer', SubmitType::class, array('label' => 'Nouvel Inscription'))
+            ->add('enregistrer', SubmitType::class, array('label' => 'Ajouter un instrument'))
         ;
     }
 
