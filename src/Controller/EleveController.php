@@ -33,6 +33,21 @@ class EleveController extends AbstractController
             'pEleves' => $eleves,
         ]); 
     }
+    #[Route('/consulter/{id}', name: 'consulter')]
+    public function consulterEleves(ManagerRegistry $doctrine, int $id){
+
+        $eleve= $doctrine->getRepository(Eleve::class)->find($id);
+
+        if (!$eleve) {
+            throw $this->createNotFoundException(
+            'Aucun eleves trouvé avec le numéro '.$id
+            );
+        }
+
+        //return new Response('Eleves : '.$eleves->getLibelle());
+        return $this->render('eleve/consulter.html.twig', [
+            'eleve' => $eleve,]);
+    }
 
     #[Route('/ajouter', name: 'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){

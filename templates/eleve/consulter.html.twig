@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <a type="button" class="btn btn-primary" href={{ path('app_eleve_lister') }}>Retour à la liste</a></br></br>      
+		<h2>PAGE DE CONSULTATION D'UN ELEVE</h2>
+ <p>
+  <table>
+    <tr><td>Id : </td><td>{{eleve.id}} </td></tr>
+    <tr><td>Responsable : </td><td>{{eleve.responsable.nom}}</td></tr>
+      <tr><td>Cours : </td><td>
+				<ul>
+					{% for i in eleve.inscriptions %}
+						<li>{{ i.cours.libelle }}</li>
+					{% endfor %}
+				</ul>
+		</td></tr>
+ </table>
+{% endblock %}
