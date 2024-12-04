@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Responsable;
 use App\Form\RegisterType;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -27,6 +28,52 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
+    }
+
+    #[Route('/init', name: 'init')]
+    public function init(Environment $twig, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher, UserRepository $userRepository): Response
+    {
+        if($userRepository->findBy(['username' => 'gestadmin'])) {
+            throw $this->createNotFoundException('Utilisateur all déjà existant');
+        }
+
+        $gestadmin = new User();
+        $gestadmin->setUsername('gestadmin');
+        $gestadmin->setPassword($hasher->hashPassword($gestadmin, 'gestadmin'));
+        $gestadmin->setRoles(['ROLE_USER', 'ROLE_GESTIONNAIRE', 'ROLE_ADMIN']);
+        $em->persist($gestadmin);
+
+        $admin = new User();
+        $admin->setUsername('admin');
+        $admin->setPassword($hasher->hashPassword($admin, 'admin'));
+        $admin->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        $em->persist($admin);
+
+        $gestio = new User();
+        $gestio->setUsername('gestio');
+        $gestio->setPassword($hasher->hashPassword($gestio, 'gestio'));
+        $gestio->setRoles(['ROLE_USER', 'ROLE_GESTIONNAIRE']);
+        $em->persist($gestio);
+
+        $respeleve = new User();
+        $respeleve->setUsername('resp');
+        $respeleve->setPassword($hasher->hashPassword($respeleve, 'resp'));
+        $respeleve->setRoles(['ROLE_USER', 'ROLE_RESPELEVE']);
+        $resp = new Responsable();
+        $resp->setNom('Mari');
+        $resp->setPrenom('Richard');
+        $resp->setNumRue(1);
+        $resp->setRue('Allée de l\'Acacia');
+        $resp->setCopos('14000');
+        $resp->setVille('Caen');
+        $resp->setTel('0625317345');
+        $resp->setMail('richard.mari@gmail.com');
+        $respeleve->setResponsable($resp);
+        $em->persist($respeleve);
+
+        $em->flush();
+        
+        return $this->redirectToRoute('app_account_login');
     }
 
     #[Route('/register', name: 'register')]
