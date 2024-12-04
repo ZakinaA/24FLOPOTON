@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block javascripts %}{% endblock %}
+		
+		<h1>LISTE DES CLASSES D'INSTRUMENTS</h1>
+		<table>
+
+		{% for c in cClasseInstrument %}
+		<tr>
+			<td>{{ c.libelle }}</td>
+        </tr>
+	{% else %}
+		<tr>
+		<td>Aucun modèle n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+    </table>
+{% endblock %}
