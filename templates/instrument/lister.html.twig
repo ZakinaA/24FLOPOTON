@@ -9,7 +9,7 @@
         {% block javascripts %}{% endblock %}
 		
 		<h1>LISTE DES INSTRUMENTS</h1><a type="button" class="btn btn-success" href={{ path('app_instrument_ajouter') }}>Ajouter</a></br>
-		<table width="60%" border="2" cellspacing="1" cellpadding="10">
+		<table width="45%" border="2" cellspacing="1" cellpadding="10">
 
         <thead>
         <tr>
@@ -18,7 +18,7 @@
             <th>Couleur</th>
             <th>Marque</th>
             <th>Type d'Instrument</th>
-            <th>Modifier</th>
+            <th>Modifier/Supprimer</th>
         </tr>
     </thead>
 
@@ -31,6 +31,8 @@
             <td>{{ i.typeInstrument.libelle }}</td>
             <td>
 				<a class="btn btn-primary" type="button" href={{ path('app_instrument_modifier', {'id': i.id}) }}>Modifier</a>
+				<a class="btn btn-danger" type="button" href={{ path('app_instrument_supprimer', { 'id': i.id }) }} onclick="return  confirm('Êtes vous sur de vouloir supprimer cet instrument ?')">Supprimer</a>
+
 			</td>
         </tr>
 	{% else %}
