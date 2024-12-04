@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <h1>Administrateur</h1>
+    </br>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_utilisateur_lister') }}>Gérer les Utilisateurs</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_typeinstrument_lister') }}>Gérer les Types d'instrument</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_jour_lister') }}>Gérer les Jours</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_accessoire_lister') }}>Gérer les Accessoires</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_marque_lister') }}>Gérer les Marques</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_modele_lister') }}>Gérer les Modèles</a>
+        </li>
+        <li class="list-group-item">
+            <a style="width: 12%" class="btn btn-primary" href={{ path('app_quotientfamilial_lister') }}>Gérer les Quotients familiaux</a>
+        </li>
+    </ul>
+{% endblock %}
