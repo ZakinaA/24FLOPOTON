@@ -17,11 +17,9 @@ use App\Form\InterventionEditType;
 class InterventionController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    function index(): Response
     {
-        return $this->render('intervention/index.html.twig', [
-            'controller_name' => 'InterventionController',
-        ]);
+        return $this->redirectToRoute('app_intervention_lister');
     }
     
     #[Route('/lister', name: 'lister')]

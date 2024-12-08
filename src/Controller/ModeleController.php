@@ -11,12 +11,10 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/modele', name: 'app_modele_')]
 class ModeleController extends AbstractController
 {
-    #[Route('/index', name: 'index')]
-    function accueil(): Response
+    #[Route('/', name: 'index')]
+    function index(): Response
     {
-        $annee = '2024';
-        return $this->render('modele/index.html.twig', ['pAnnee' => $annee,
-       ]);	
+        return $this->redirectToRoute('app_modele_lister');
     }
 
     #[Route('/lister', name: 'lister')]

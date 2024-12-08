@@ -12,11 +12,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class JourController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    function index(): Response
     {
-        return $this->render('jour/index.html.twig', [
-            'controller_name' => 'JourController',
-        ]);
+        return $this->redirectToRoute('app_jour_lister');
     }
 
     #[Route('/lister', name: 'lister')]

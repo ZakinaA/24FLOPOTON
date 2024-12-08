@@ -15,14 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class EleveController extends AbstractController
 {
-    #[Route('/index', name: 'index')]
-
-    public function index(): Response
+    #[Route('/', name: 'index')]
+    function index(): Response
     {
-        return $this->render('eleve/index.html.twig', [
-            'controller_name' => 'EleveController',
-        ]);
+        return $this->redirectToRoute('app_eleve_lister');
     }
+
     #[Route('/lister', name: 'lister')]
     public function lister(ManagerRegistry $doctrine)
     {

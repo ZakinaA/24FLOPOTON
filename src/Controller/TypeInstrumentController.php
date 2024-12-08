@@ -11,12 +11,10 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/typeinstrument', name: 'app_typeinstrument_')]
 class TypeInstrumentController extends AbstractController
 {
-    #[Route('/index', name: 'index')]
-    function accueil(): Response
+    #[Route('/', name: 'index')]
+    function index(): Response
     {
-        $annee = '2024';
-        return $this->render('type_instrument/accueil.html.twig', ['pAnnee' => $annee,
-       ]);	
+        return $this->redirectToRoute('app_typeinstrument_lister');
     }
 
     #[Route('/lister', name: 'lister')]

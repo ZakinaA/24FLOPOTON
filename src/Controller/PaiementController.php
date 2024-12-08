@@ -13,11 +13,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class PaiementController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    function index(): Response
     {
-        return $this->render('paiement/index.html.twig', [
-            'controller_name' => 'PaiementController',
-        ]);
+        return $this->redirectToRoute('app_paiement_lister');
     }
     
     #[Route('/lister', name: 'lister')]
