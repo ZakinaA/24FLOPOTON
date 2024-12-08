@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block javascripts %}{% endblock %}
+		
+		<h1>LISTE DES {{diplay_plural|upper}}S
+        {% if route_exists('app_' ~ name|lower ~ '_ajouter') %}<a type="button" class="btn btn-success" href={{ path('app_' ~ name|lower ~ '_ajouter') }}>Ajouter</a>{% endif %}</h1>
+		</br></br>
+		<table width="60%" border="2" cellspacing="1" cellpadding="10">
+            <thead>
+                <tr>
+                    {% for header in headers %}
+                        <th>{{ header }}</th>
+                    {% endfor %}
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        <td>
+                            {% set consult_route = 'app_' ~ name|lower ~ '_consulter' %}
+                            {% if route_exists(consult_route) %}
+                                <a href="{{ path(consult_route, {'id': row[0]}) }}">{{ row[1] }}</a>
+                            {% else %}
+                                {{ row[1] }}
+                            {% endif %}
+                        </td>
+                        {% for value in row[2:] %}
+                            <td>
+                                {% if value is iterable %}
+                                    <ul>
+                                        {% for item in value %}
+                                            <li>{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ value }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                        <td>
+                        {% set edit_route = 'app_' ~ name|lower ~ '_modifier' %}
+                        {% if route_exists(edit_route) %}
+                            <a class="btn btn-primary" type="button" href={{ path(edit_route, {'id': row[0]}) }}>Modifier</a>
+                        {% endif %}
+                        {% set del_route = 'app_' ~ name|lower ~ '_supprimer' %}
+                        {% if route_exists(del_route) %}
+                            <a class="btn btn-danger" type="button" href={{ path(del_route, {'id': row[0]}) }} onclick="return  confirm('Êtes vous sur de vouloir supprimer ce {{display}} ?')">Supprimer</a>
+                        {% else %}
+                            <a class="btn btn-danger disabled" type="button">Supprimer</a>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}
