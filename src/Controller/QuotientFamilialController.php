@@ -23,10 +23,26 @@ class QuotientFamilialController extends AbstractController
     #[Route('/lister', name: 'lister')]
     public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(QuotientFamilial::class);
+        $entities = $repository->findAll();
 
-        $quotients= $repository->findAll();
-        return $this->render('quotient_familial/lister.html.twig', [
-            'quotients' => $quotients
+        $headers = ['Libelle', 'Minimum'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getLibelle(),
+                $e->getQuotientMini(),
+                //$e->getCategory() ? $entity->getCategory()->getName() : 'Aucune',
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'QuotientFamilial',
+            'display' => 'Quotient familial',
+            'diplay_plural' => 'Quotients familiaux',
+            'headers' => $headers,
+            'rows' => $rows,
         ]);
     }
 
@@ -46,21 +62,21 @@ class QuotientFamilialController extends AbstractController
             return $this->redirectToRoute('app_quotientfamilial_lister');
         }
         
-        return $this->render('quotient_familial/ajouter.html.twig', [
+        return $this->render('entities/ajouter.html.twig', [
+            'display' => 'Quotient familial',
             'form' => $form->createView()
         ]);
     }
 
     #[Route('/modifier/{id<\d+>}', name: 'modifier')]
     public function modifier(ManagerRegistry $doctrine, $id, Request $request){
-        $q = $doctrine->getRepository(QuotientFamilial::class)->find($id);
-     
-        if (!$q) {
+        $e = $doctrine->getRepository(QuotientFamilial::class)->find($id);
+        
+        if (!$e) {
             throw $this->createNotFoundException('Aucun quotient familial trouvé avec l\'ID '.$id);
         }
 
-        $form = $this->createForm(QuotientFamilialEditType::class, $q);
-
+        $form = $this->createForm(QuotientFamilialEditType::class, $e);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $doctrine->getManager();
@@ -68,20 +84,23 @@ class QuotientFamilialController extends AbstractController
             return $this->redirectToRoute('app_quotientfamilial_lister');
         }
 
-        return $this->render('quotient_familial/modifier.html.twig', ['form' => $form->createView()]);
+        return $this->render('entities/modifier.html.twig', [
+            'display' => 'Quotient familial',
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/supprimer/{id<\d+>}', name: 'supprimer')]
      public function supprimer(ManagerRegistry $doctrine, int $id): Response
      {
-        $q = $doctrine->getRepository(QuotientFamilial::class)->find($id);
+        $e = $doctrine->getRepository(QuotientFamilial::class)->find($id);
 
-        if (!$q) {
+        if (!$e) {
             throw $this->createNotFoundException('Aucun quotient familial trouvé avec l\'ID '.$id);
         }
 
         $entityManager = $doctrine->getManager();
-        $entityManager->remove($q); 
+        $entityManager->remove($e);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_quotientfamilial_lister');
