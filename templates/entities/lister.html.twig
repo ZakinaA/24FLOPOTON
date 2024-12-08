@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
+{% block title %}Lister {{display_plural}}{% endblock %}
 {% block body %}
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block javascripts %}{% endblock %}
 		
-		<h1>LISTE DES {{diplay_plural|upper}}S
+		<h1>LISTE DES {{display_plural|upper}}
         {% if route_exists('app_' ~ name|lower ~ '_ajouter') %}<a type="button" class="btn btn-success" href={{ path('app_' ~ name|lower ~ '_ajouter') }}>Ajouter</a>{% endif %}</h1>
 		</br></br>
 		<table width="60%" border="2" cellspacing="1" cellpadding="10">
