@@ -40,7 +40,7 @@ class QuotientFamilialController extends AbstractController
         return $this->render('entities/lister.html.twig', [
             'name' => 'QuotientFamilial',
             'display' => 'Quotient familial',
-            'diplay_plural' => 'Quotients familiaux',
+            'display_plural' => 'Quotients familiaux',
             'headers' => $headers,
             'rows' => $rows,
         ]);

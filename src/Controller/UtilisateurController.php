@@ -50,8 +50,8 @@ class UtilisateurController extends AbstractController
 
         return $this->render('entities/lister.html.twig', [
             'name' => 'Utilisateur',
-            'diplay' => 'Utilisateur',
-            'diplay_plural' => 'Utilisateurs',
+            'display' => 'Utilisateur',
+            'display_plural' => 'Utilisateurs',
             'headers' => $headers,
             'rows' => $rows,
         ]);
