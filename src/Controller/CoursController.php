@@ -111,7 +111,7 @@ class CoursController extends AbstractController
          $entityManager->remove($cours); 
          $entityManager->flush();
  
-         return $this->redirectToRoute('app_intervention_lister');
+         return $this->redirectToRoute('app_cours_lister');
      }
 
 }
