@@ -43,7 +43,7 @@ class PaiementController extends AbstractController
             $entityManager->persist($paiement);
             $entityManager->flush();
             
-            return $this->render('paiement/consulter.html.twig', ['paiement' => $paiement,]);
+            return $this->redirectToRoute('app_paiement_lister');
         } else  {
             return $this->render('paiement/ajouter.html.twig', array('form' => $form->createView(),));
         }
