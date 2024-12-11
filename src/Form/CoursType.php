@@ -3,6 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Cours;
+use App\Entity\TypeInstrument;
+use App\Entity\Jour;
+use App\Entity\Professeur;
+use App\Entity\TypeCours;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +28,22 @@ class CoursType extends AbstractType
             ])
             ->add('heureFin', null, [
                 'widget' => 'single_text',
+            ])
+            ->add('typeInstrument', EntityType::class, [
+                'class' => TypeInstrument::class,
+                'choice_label' => 'libelle',
+            ])
+            ->add('jour', EntityType::class, [
+                'class' => Jour::class,
+                'choice_label' => 'libelle',
+            ])
+            ->add('professeur', EntityType::class, [
+                'class' => Professeur::class,
+                'choice_label' => 'nom',
+            ])
+            ->add('typeCours', EntityType::class, [
+                'class' => TypeCours::class,
+                'choice_label' => 'libelle',
             ])
             ->add('enregistrer', SubmitType::class, array('label' => 'Nouvel cours'))
         ;
