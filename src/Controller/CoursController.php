@@ -103,7 +103,7 @@ class CoursController extends AbstractController
             throw $this->createNotFoundException('Aucun cours trouvé avec l\'ID '.$id);
         }
 
-        $form = $this->createForm(CoursType::class, $e);
+        $form = $this->createForm(CoursModifierType::class, $e);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $doctrine->getManager();
