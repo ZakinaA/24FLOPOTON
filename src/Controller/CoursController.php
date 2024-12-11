@@ -22,37 +22,37 @@ class CoursController extends AbstractController
     }
 
     #[Route('/lister', name: 'lister')]
-    public function listerCours(ManagerRegistry $doctrine){
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Cours::class);
         $entities = $repository->findAll();
 
-        $headers = ['âge minimum', 'Heure début', 'Heure fin', 'Jour', 'Professeur', 'Type'];
+        $headers = ['Âge minimum', 'Heure début', 'Heure fin', 'Jour', 'Professeur', 'Type'];
         $rows = [];
 
         foreach ($entities as $e) {
             $rows[] = [
                 $e->getId(),
                 $e->getAgeMini(),
-                $e->getHeureDebut(),
-                $e->getHeureFin(),
-                $e->getJour()->getLibelle(),
-                $e->getProfesseur()->getPrenom().' '.$e->getProfesseur()->getPrenom(),
-                $e->getTypecours()->getLibelle(),
+                $e->getHeureDebut()->format('H:i'),
+                $e->getHeureFin()->format('H:i'),
+                $e->getJour()?->getLibelle() ?? '',
+                $e->getProfesseur()?->getPrenom().' '.$e->getProfesseur()?->getPrenom(),
+                $e->getTypecours()?->getLibelle() ?? '',
             ];
         }
 
         return $this->render('entities/lister.html.twig', [
-            'name' => 'QuotientFamilial',
-            'display' => 'Quotient familial',
-            'display_plural' => 'Quotients familiaux',
+            'name' => 'Cours',
+            'display' => 'Cours',
+            'display_plural' => 'Cours',
             'headers' => $headers,
             'rows' => $rows,
         ]);
     }
 
     #[Route('/consulter/{id}', name: 'consulter')]
-    public function consulterCours(ManagerRegistry $doctrine, int $id){
-        $repository = $doctrine->getRepository(Cours::class); // Remplace User par l'entité concernée
+    public function consulter(ManagerRegistry $doctrine, int $id){
+        $repository = $doctrine->getRepository(Cours::class);
         $entity = $repository->find($id);
 
         if (!$entity) {
@@ -60,10 +60,10 @@ class CoursController extends AbstractController
         }
 
         $columns = [
-            'libelle' => $entity->getLibelle(),
+            'Libelle' => $entity->getLibelle(),
             'Age Minimum' => $entity->getAgeMini(),
-            'Heure de début' => $entity->getHeureDebut(),
-            'Heure de Fin' => $entity->getHeureFin(),
+            'Heure de début' => $entity->getHeureDebut()->format('H:i'),
+            'Heure de Fin' => $entity->getHeureFin()->format('H:i'),
         ];
  
         return $this->render('entities/consulter.html.twig', [
@@ -96,15 +96,14 @@ class CoursController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'modifier')]
-
-    public function modifierCours(ManagerRegistry $doctrine, $id, Request $request){
+    public function modifier(ManagerRegistry $doctrine, $id, Request $request){
         $e = $doctrine->getRepository(Cours::class)->find($id);
         
         if (!$e) {
-            throw $this->createNotFoundException('Aucun quotient familial trouvé avec l\'ID '.$id);
+            throw $this->createNotFoundException('Aucun cours trouvé avec l\'ID '.$id);
         }
 
-        $form = $this->createForm(CoursType::class, $e);
+        $form = $this->createForm(CoursModifierType::class, $e);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $doctrine->getManager();
@@ -113,26 +112,24 @@ class CoursController extends AbstractController
         }
 
         return $this->render('entities/modifier.html.twig', [
-            'display' => 'Quotient familial',
+            'display' => 'Cours',
             'form' => $form->createView()
         ]);
-     }
+    }
 
-     #[Route('/supprimer/{id}', name: 'supprimer')]
+    #[Route('/supprimer/{id}', name: 'supprimer')]
+    public function supprimer(ManagerRegistry $doctrine, int $id): Response
+    {
+        $cours = $doctrine->getRepository(Cours::class)->find($id);
 
-     public function supprimer(ManagerRegistry $doctrine, int $id): Response
-     {
-         $cours = $doctrine->getRepository(Cours::class)->find($id);
- 
-         if (!$cours) {
-             throw $this->createNotFoundException('Aucun cours trouvé avec l\'ID '.$id);
-         }
- 
-         $entityManager = $doctrine->getManager();
-         $entityManager->remove($cours); 
-         $entityManager->flush();
- 
-         return $this->redirectToRoute('app_cours_lister');
-     }
+        if (!$cours) {
+            throw $this->createNotFoundException('Aucun cours trouvé avec l\'ID '.$id);
+        }
 
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($cours); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_cours_lister');
+    }
 }

@@ -45,7 +45,7 @@ class CoursType extends AbstractType
                 'class' => TypeCours::class,
                 'choice_label' => 'libelle',
             ])
-            ->add('enregistrer', SubmitType::class, array('label' => 'Nouvel cours'))
+            ->add('enregistrer', SubmitType::class, array('label' => 'Nouveau cours'))
         ;
     }
 
