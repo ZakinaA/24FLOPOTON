@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block title %}Consulter {{name}}{% endblock %}
+{% block body %}
+    <h1>CONSULTER {{ name|upper }}{#{ entity.username }#}</h1>
+
+    <table class="table table-striped" style="width: auto">
+        <thead>
+            <tr>
+                <th style="text-align: center">Attribut</th>
+                <th style="text-align: center">Valeur</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for label, value in columns %}
+                <tr>
+                    <td>{{ label }} :</td>
+                    <td>
+                        {% if value is iterable %}
+                            <ul>
+                                {% for item in value %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% set lister_route = 'app_' ~ name|lower ~ '_lister' %}
+    {% if route_exists(lister_route) %}
+        <a class="btn btn-primary" href={{ path(lister_route) }}>Retour à la liste</a>
+    {% else %}
+        <a class="btn btn-primary disabled">Retour à la liste</a>
+    {% endif %}
+{% endblock %}

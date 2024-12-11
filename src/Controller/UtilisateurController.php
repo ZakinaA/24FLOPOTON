@@ -20,8 +20,8 @@ class UtilisateurController extends AbstractController
         return $this->redirectToRoute('app_utilisateur_lister');
     }
 
-    #[Route('/lister', name: 'lister')]
-    public function lister(ManagerRegistry $doctrine){
+    #[Route('/listerold', name: 'listerold')]
+    public function listerold(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(User::class);
 
         $users= $repository->findAll();
@@ -30,8 +30,35 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/consulter/{id<\d+>}', name: 'consulter')]
-    public function consulterCours(ManagerRegistry $doctrine, int $id){
+    #[Route('/lister', name: 'lister')]
+    public function lister(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(User::class);
+        $entities = $repository->findAll();
+
+        $headers = ['Nom d\'utilisateur', 'Rôles', 'Responsable'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getUsername(),
+                $e->getRoles(),
+                $e->getResponsable() ? 'Oui' : 'Non',
+                //$e->getCategory() ? $entity->getCategory()->getName() : 'Aucune',
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Utilisateur',
+            'display' => 'Utilisateur',
+            'display_plural' => 'Utilisateurs',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
+    }
+
+    #[Route('/consulterold/{id<\d+>}', name: 'consulterold')]
+    public function consulter(ManagerRegistry $doctrine, int $id){
         $u = $doctrine->getRepository(User::class)->find($id);
 
         if (!$u) {
@@ -40,6 +67,28 @@ class UtilisateurController extends AbstractController
 
         return $this->render('utilisateur/consulter.html.twig', [
             'u' => $u
+        ]);
+    }
+
+    #[Route('/consulter/{id<\d+>}', name: 'consulter')]
+    public function consulter2(ManagerRegistry $doctrine, int $id){
+        $repository = $doctrine->getRepository(User::class); // Remplace User par l'entité concernée
+        $entity = $repository->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('L\'utilisateur n\'a pas été trouvé');
+        }
+
+        $columns = [
+            'Nom d\'utilisateur' => $entity->getUsername(),
+            'Rôles' => $entity->getRoles(),
+            'Responsable' => $entity->getResponsable() ? 'Oui' : 'Non',
+        ];
+
+        return $this->render('entities/consulter.html.twig', [
+            'name' => 'Utilisateur',
+            'entity' => $entity,
+            'columns' => $columns,
         ]);
     }
     

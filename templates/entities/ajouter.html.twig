@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter {{display}}{% endblock %}
+{% block body %}
+<h1>AJOUTER {{display|upper}}</h1>
+{{ form_start(form) }}
+{{ form_end(form) }}
+</br>
+<a class="btn" type="button" href="./">Retour à la liste</a>
+{% endblock %}

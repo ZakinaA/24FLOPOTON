@@ -15,14 +15,11 @@ use App\Form\InscriptionModifierType;
 
 class InscriptionController extends AbstractController
 {
-    #[Route('/inscription', name: 'app_inscription')]
-    public function index(): Response
+    #[Route('/', name: 'index')]
+    function index(): Response
     {
-        return $this->render('inscription/index.html.twig', [
-            'controller_name' => 'InscriptionController',
-        ]);
+        return $this->redirectToRoute('app_inscription_lister');
     }
-
     
     #[Route('/lister', name: 'lister')]
     public function listerInscription(ManagerRegistry $doctrine){

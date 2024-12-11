@@ -15,12 +15,10 @@ use App\Form\CoursModifierType;
 #[Route('/cours', name: 'app_cours_')]
 class CoursController extends AbstractController
 {
-    #[Route('/index', name: 'index')]
-    public function index(): Response
+    #[Route('/', name: 'index')]
+    function index(): Response
     {
-        return $this->render('cours/index.html.twig', [
-            'controller_name' => 'CoursController',
-        ]);
+        return $this->redirectToRoute('app_cours_lister');
     }
 
     #[Route('/lister', name: 'lister')]

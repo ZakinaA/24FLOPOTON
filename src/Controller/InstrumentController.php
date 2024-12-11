@@ -16,12 +16,10 @@ use App\Form\InstrumentModifierType;
 #[Route('/instrument', name: 'app_instrument_')]
 class InstrumentController extends AbstractController
 {
-    #[Route('/index', name: 'index')]
-    function accueil(): Response
+    #[Route('/', name: 'index')]
+    function index(): Response
     {
-        $annee = '2024';
-        return $this->render('instrument/index.html.twig', ['pAnnee' => $annee,
-       ]);	
+        return $this->redirectToRoute('app_instrument_lister');
     }
 
     #[Route('/lister', name: 'lister')]
