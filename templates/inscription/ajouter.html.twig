@@ -1,7 +1,38 @@
 {# templates/inscription/ajouter.html.twig #}
 {% extends 'base.html.twig' %}
+
 {% block body %}
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Créer une nouvelle inscription</h1>
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+            <div class="form-group mb-3">
+                {{ form_label(form.dateInscription, 'Date d\'inscription', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.dateInscription, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateInscription) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.cours, 'Cours', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.cours, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.cours) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.eleve, 'Élève', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.eleve, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.eleve) }}
+            </div>
+
+            <div class="text-center">
+                {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
 {% endblock %}
