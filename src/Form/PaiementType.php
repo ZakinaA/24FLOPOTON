@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Inscription;
 use App\Entity\Paiement;
+use App\Entity\Eleve;
+use App\Entity\Cours;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +23,9 @@ class PaiementType extends AbstractType
             ])
             ->add('inscription', EntityType::class, [
                 'class' => Inscription::class,
-                'choice_label' => 'id',
+                'choice_label' => function ($inscription) {
+                    return $inscription->getEleve()->getNom() . ' - ' . $inscription->getCours()->getLibelle();
+                },
             ])
             ->add('enregistrer', SubmitType::class, array('label' => 'Nouveau paiement'))
         ;
