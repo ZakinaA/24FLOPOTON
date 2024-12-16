@@ -47,6 +47,7 @@ security:
         - { path: ^/inscription, roles: ROLE_GESTIONNAIRE }
         - { path: ^/intervention, roles: ROLE_GESTIONNAIRE }
         - { path: ^/eleve, roles: ROLE_GESTIONNAIRE }
+        - { path: ^/paiement, roles: ROLE_GESTIONNAIRE }
 
         - { path: ^/facture, roles: ROLE_RESPELEVE }
 
