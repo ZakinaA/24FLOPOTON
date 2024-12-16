@@ -20,10 +20,24 @@ class ClasseInstrumentController extends AbstractController
     #[Route('/lister', name: 'lister')]
     public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(ClasseInstrument::class);
+        $entities = $repository->findAll();
 
-        $classesinstruments= $repository->findAll();
-        return $this->render('classe_instrument/lister.html.twig', [
-            'cClasseInstrument' => $classesinstruments
+        $headers = [];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getLibelle(),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'ClasseInstrument',
+            'display' => 'ClasseInstrument',
+            'display_plural' => 'Classes d\'Instruments',
+            'headers' => $headers,
+            'rows' => $rows,
         ]);
     }
 }
