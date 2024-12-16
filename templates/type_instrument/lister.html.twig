@@ -9,10 +9,18 @@
         {% block javascripts %}{% endblock %}
 		
 		<h2><strong><u>LISTE DES TYPES D'INSTRUMENTS</u></strong></h2></br>
-		<table>
+		<table width="45%" border="2" cellspacing="1" cellpadding="10">
+		<thead>
+        <tr>
+            <th>Type d'instrument</th>
+            <th>Classe d'instrument</th>
+
+        </tr>
+    </thead>
 		{% for t in tTypesInstruments %}
 		<tr>
-			<td><strong><h3>{{ t.libelle }}</h3></strong></td>
+			<td><strong><h4>{{ t.libelle }}</h4></strong></td>
+			<td><strong><h4>{{ t.classeInstrument.libelle }}</h4></strong></td>
 			<td><a class="btn btn-primary" type="button" href={{ path('app_typeinstrument_consulter', {'id': t.id}) }}>Consulter</a></td>
 
 	{% else %}
