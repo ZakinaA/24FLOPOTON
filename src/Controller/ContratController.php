@@ -20,7 +20,8 @@ class ContratController extends AbstractController
         return $this->redirectToRoute('app_contrat_lister');
     }
     
-    #[Route('/lister', name: 'lister')]    public function lister(ManagerRegistry $doctrine){
+    #[Route('/lister', name: 'lister')]    
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Contrat::class);
         $entities = $repository->findAll();
 
