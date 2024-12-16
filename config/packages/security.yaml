@@ -50,6 +50,7 @@ security:
         - { path: ^/paiement, roles: ROLE_GESTIONNAIRE }
 
         - { path: ^/facture, roles: ROLE_RESPELEVE }
+        - { path: ^/calendrier, roles: ROLE_RESPELEVE }
 
         - { path: ^/profile, roles: ROLE_USER }
 
