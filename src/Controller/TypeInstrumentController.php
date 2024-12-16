@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\TypeInstrument;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Form\TypeInstrumentType;
+
 
 #[Route('/typeinstrument', name: 'app_typeinstrument_')]
 class TypeInstrumentController extends AbstractController
@@ -64,6 +67,28 @@ class TypeInstrumentController extends AbstractController
         //return new Response('Instrument : '.$instruments->getLibelle());
         return $this->render('type_instrument/consulter.html.twig', [
             'typeinstrument' => $typeinstrument,
+        ]);
+    }
+
+    #[Route('/ajouter', name: 'ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request){
+        $e = new TypeInstrument();
+        $form = $this->createForm(TypeInstrumentType::class, $e);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $e = $form->getData();
+            
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($e);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('app_typeinstrument_lister', ['id'=> $e->getId()]);
+        }
+        
+        return $this->render('entities/ajouter.html.twig', [
+            'display' => 'Cours',
+            'form' => $form->createView()
         ]);
     }
 }
