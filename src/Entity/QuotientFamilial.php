@@ -27,6 +27,9 @@ class QuotientFamilial
     #[ORM\OneToMany(targetEntity: Responsable::class, mappedBy: 'quotientFamilial')]
     private Collection $responsable;
 
+    #[ORM\OneToOne(mappedBy: 'QuotientFamilial', cascade: ['persist', 'remove'])]
+    private ?Tarif $tarif = null;
+
     public function __construct()
     {
         $this->responsable = new ArrayCollection();
@@ -87,6 +90,28 @@ class QuotientFamilial
                 $responsable->setQuotientFamilial(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTarif(): ?Tarif
+    {
+        return $this->tarif;
+    }
+
+    public function setTarif(?Tarif $tarif): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($tarif === null && $this->tarif !== null) {
+            $this->tarif->setQuotientFamilial(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($tarif !== null && $tarif->getQuotientFamilial() !== $this) {
+            $tarif->setQuotientFamilial($this);
+        }
+
+        $this->tarif = $tarif;
 
         return $this;
     }
