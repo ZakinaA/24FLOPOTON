@@ -96,13 +96,15 @@
                         </li>
                         {% endif %}
                         {% if is_granted('ROLE_RESPELEVE') %}
-                        <li class="dropdown">
+                        <a class="navbar-brand" href={{ path('app_calendrier_index') }}>Emploi du temps</a>
+                        <a class="navbar-brand" href={{ path('app_facture_lister') }}>Factures</a>
+                        <!--<li class="dropdown">
                             <a href={{ path('app_main_index') }} class="navbar-brand dropdown-toggle" data-toggle="dropdown">Resp. Élève<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="disabled" href={{ path('app_main_index') }}>Emploi du temps</a></li>
                                 <li><a class="disabled" href={{ path('app_main_index') }}>Mes factures</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         {% endif %}
                     </ul>
                 </div>
