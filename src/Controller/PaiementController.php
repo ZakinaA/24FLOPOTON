@@ -19,8 +19,35 @@ class PaiementController extends AbstractController
     {
         return $this->redirectToRoute('app_paiement_lister');
     }
-    
+
     #[Route('/lister', name: 'lister')]
+    public function lister(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(Paiement::class);
+        $entities = $repository->findAll();
+
+        $headers = ['Nom du cours', 'Nom de l\'Eleve', 'Montant du Paiement', 'Date du Paiement', 'Type'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getInscription()?->getCours()?->getLibelle(),
+                $e->getInscription()?->getEleve()?->getPrenom().' '.$e->getInscription()?->getEleve()?->getNom(),
+                $e->getMontant(),
+                $e->getDatePaiement()->format('m/d/Y')
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Paiement',
+            'display' => 'Paiement',
+            'display_plural' => 'Paiements',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
+    }
+    
+    #[Route('/listerold', name: 'listerold')]
     public function listerPaiement(ManagerRegistry $doctrine){
         
         $repository = $doctrine->getRepository(Paiement::class);
@@ -45,12 +72,14 @@ class PaiementController extends AbstractController
             
             return $this->redirectToRoute('app_paiement_lister');
         } else  {
-            return $this->render('paiement/ajouter.html.twig', array('form' => $form->createView(),));
+            return $this->render('entities/ajouter.html.twig', [
+                'display' => 'Paiement',
+                'form' => $form->createView()
+        ]);
         }
     }
 
     #[Route('/modifier/{id}', name: 'modifier')]
-
     public function modifierPaiement(ManagerRegistry $doctrine, $id, Request $request){
  
         //récupération du cours dont l'id est passé en paramètre
@@ -59,27 +88,27 @@ class PaiementController extends AbstractController
         if (!$paiement) {
             throw $this->createNotFoundException('Aucun paiement trouvé avec le numéro '.$id);
         }
-        else
-        {
-                $form = $this->createForm(PaiementModifierType::class, $paiement);
-                $form->handleRequest($request);
-     
-                if ($form->isSubmitted() && $form->isValid()) {
-     
-                     $paiement = $form->getData();
-                     $entityManager = $doctrine->getManager();
-                     $entityManager->persist($paiement);
-                     $entityManager->flush();
-                     return $this->redirectToRoute('app_paiement_lister');
-               }
-               else{
-                    return $this->render('paiement/ajouter.html.twig', array('form' => $form->createView(),));
-               }
-            }
+        
+        $form = $this->createForm(PaiementModifierType::class, $paiement);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+                $paiement = $form->getData();
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($paiement);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_paiement_lister');
+        }
+        else{
+            return $this->render('entities/ajouter.html.twig', [
+                'display' => 'Paiement',
+                'form' => $form->createView()
+            ]);
+        }  
      }
 
      #[Route('/supprimer/{id}', name: 'supprimer')]
-
      public function supprimer(ManagerRegistry $doctrine, int $id): Response
      {
          $paiement = $doctrine->getRepository(Paiement::class)->find($id);

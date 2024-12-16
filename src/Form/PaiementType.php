@@ -24,7 +24,7 @@ class PaiementType extends AbstractType
             ->add('inscription', EntityType::class, [
                 'class' => Inscription::class,
                 'choice_label' => function ($inscription) {
-                    return $inscription->getEleve()->getNom() . ' - ' . $inscription->getCours()->getLibelle();
+                    return $inscription->getEleve()->getPrenom() . ' ' . $inscription->getEleve()->getNom() . ' - ' . $inscription->getCours()->getLibelle();
                 },
             ])
             ->add('enregistrer', SubmitType::class, array('label' => 'Nouveau paiement'))
