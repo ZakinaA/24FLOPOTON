@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  <h2>Liste</h2>
+
+  <table width="45%" border="2" cellspacing="1" cellpadding="10">
+    <thead>
+      <tr>
+        <th>Numéro de série</th>
+        <th>Marque</th>
+        <th>Modèle</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for instrument in typeinstrument.instruments %}
+        <tr>
+          <td>{{ instrument.numSerie }}</td>
+          <td>{{ instrument.marque.libelle }}</td>
+          <td>{{ instrument.modele.nom }}</td>
+          <td>
+            <a href="{{ path('app_instrument_consulter', { 'id': instrument.id }) }}">Voir</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a class="btn btn-primary" type="button" href={{ path('app_typeinstrument_lister') }}>Retour</a>
+{% endblock %}
