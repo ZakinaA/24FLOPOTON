@@ -21,14 +21,30 @@ class InscriptionController extends AbstractController
         return $this->redirectToRoute('app_inscription_lister');
     }
     
-    #[Route('/lister', name: 'lister')]
-    public function listerInscription(ManagerRegistry $doctrine){
-        
+    #[Route('/lister', name: 'lister')]    
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Inscription::class);
+        $entities = $repository->findAll();
 
-        $inscription= $repository->findAll();
-        return $this->render('inscription/lister.html.twig', [
-            'pInscription' => $inscription,]);
+        $headers = ['Nom du Cours', 'Nom de l\'Eleve', 'Date de l\'Inscription'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getCours()?->getLibelle(),
+                $e->getEleve()?->getNom(),
+                $e->getDateInscription()?->format('d/m/Y'),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Inscription',
+            'display' => 'Inscription',
+            'display_plural' => 'Inscriptions',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
     }
 
     #[Route('/ajouter', name: 'ajouter')]
@@ -46,7 +62,9 @@ class InscriptionController extends AbstractController
             
             return $this->redirectToRoute('app_inscription_lister');
         } else  {
-            return $this->render('inscription/ajouter.html.twig', array('form' => $form->createView(),));
+            return $this->render('entities/ajouter.html.twig', array(
+                'display' => 'Inscription',
+                'form' => $form->createView(),));
         }
     }
     
@@ -58,7 +76,7 @@ class InscriptionController extends AbstractController
         $inscription = $doctrine->getRepository(Inscription::class)->find($id);
      
         if (!$inscription) {
-            throw $this->createNotFoundException('Aucune inscription trouvé avec le numéro '.$id);
+            throw $this->createNotFoundException('Aucune inscription trouvée avec le numéro '.$id);
         }
         else
         {
@@ -73,8 +91,12 @@ class InscriptionController extends AbstractController
                      $entityManager->flush();
                      return $this->redirectToRoute('app_inscription_lister');
                }
-               else{
-                    return $this->render('inscription/ajouter.html.twig', array('form' => $form->createView(),));
+               else
+               {
+                    return $this->render('entities/modifier.html.twig', array(
+                        'display' => 'Inscription',
+                        'form' => $form->createView()
+                    ));
                }
             }
     }
