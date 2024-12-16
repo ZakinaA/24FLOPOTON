@@ -18,12 +18,35 @@ class AccessoireController extends AbstractController
     }
 
     #[Route('/lister', name: 'lister')]
-    function accessoireLister(ManagerRegistry $doctrine){
-
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Accessoire::class);
+        $entities = $repository->findAll();
 
-    $accessoires= $repository->findAll();
-    return $this->render('accessoire/lister.html.twig', [
-        'aAccessoires' => $accessoires,]);
+        $headers = ['Libelle'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getLibelle(),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Accessoire',
+            'display' => 'Accessoire',
+            'display_plural' => 'Accessoires',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
     }
+
+    #[Route('/listerold', name: 'listerold')]
+    function accessoireLister(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(Accessoire::class);
+        $accessoires= $repository->findAll();
+
+        return $this->render('accessoire/lister.html.twig', [
+            'aAccessoires' => $accessoires,]);
+        }
 }
