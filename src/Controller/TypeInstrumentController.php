@@ -91,4 +91,20 @@ class TypeInstrumentController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/supprimer/{id}', name: 'supprimer')]
+    public function supprimer(ManagerRegistry $doctrine, int $id): Response
+    {
+        $cours = $doctrine->getRepository(TypeInstrument::class)->find($id);
+
+        if (!$cours) {
+            throw $this->createNotFoundException('Aucun type d\'instrument trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($cours); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_typeinstrument_lister');
+    }
 }
