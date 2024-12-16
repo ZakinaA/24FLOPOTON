@@ -23,19 +23,38 @@ class InterventionController extends AbstractController
     }
     
     #[Route('/lister', name: 'lister')]
-    public function lister(ManagerRegistry $doctrine)
-    {
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Intervention::class);
-        
-        $interventions= $repository->findAll();
-        return $this->render('intervention/lister.html.twig', [
-            'pInterventions' => $interventions,
+        $entities = $repository->findAll();
+
+        $headers = ['Nom du professtionnel', 'Nom de l\'instrument', 'Date de début', 'Date de fin', 'Descriptif', 'Prix', 'quotité'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getProfessionnel()->getNom(),
+                $e->getInstrument()?->getTypeInstrument()?->getLibelle(),
+                $e->getDateDebut()->format('d/m/Y'),
+                $e->getDateFin()->format('d/m/Y'),
+                $e->getDescriptif(),
+                $e->getPrix(),
+                $e->getQuotite(),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Intervention',
+            'display' => 'Intervention',
+            'display_plural' => 'Interventions',
+            'headers' => $headers,
+            'rows' => $rows,
         ]); 
     }
     
     #[Route('/ajouter', name:'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){
-        $intervention = new Intervention();
+        $intervention = new intervention();
         $form = $this->createForm(InterventionType::class, $intervention);
         $form->handleRequest($request);
     
@@ -46,42 +65,42 @@ class InterventionController extends AbstractController
             $entityManager->persist($intervention);
             $entityManager->flush();
             
-            return $this->redirectToRoute('app_intervention_lister', [
-                //'id' => $intervention->getId(),
-            ]);
-        }
-        else
-        {
-            return $this->render('intervention/ajouter.html.twig', array(
-                'form' => $form->createView(),
-            ));
+            return $this->redirectToRoute('app_intervention_lister');
+        } else  {
+            return $this->render('entities/ajouter.html.twig', array(
+                'display' => 'intervention',
+                'form' => $form->createView(),));
         }
     }
     #[Route('/modifier/{id}', name:'modifier', methods:['GET', 'POST'])]
-    public function modifier(ManagerRegistry $doctrine, int $id, Request $request){
-        $intervention = $doctrine->getRepository(Intervention::class)->find($id);
+    public function modifierContrats(ManagerRegistry $doctrine, $id, Request $request){
  
+        $intervention = $doctrine->getRepository(Intervention::class)->find($id);
+     
         if (!$intervention) {
-            throw $this->createNotFoundException('Aucun intervention trouvé avec le numéro '.$id);
+            throw $this->createNotFoundException('Aucune Intervention trouvée avec le numéro '.$id);
         }
         else
         {
-            $form = $this->createForm(InterventionEditType::class, $intervention);
-            $form->handleRequest($request);
- 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $intervention = $form->getData();
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($intervention);
-                $entityManager->flush();
-                //return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
-                return $this->redirectToRoute('app_intervention_lister', [
-                    'id' => $intervention->getId(),
-                ]);
-           }
-           else{
-                return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
-           }
+
+                $form = $this->createForm(InterventionEditType::class, $intervention);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                        $intervention = $form->getData();
+                        $entityManager = $doctrine->getManager();
+                        $entityManager->persist($intervention);
+                        $entityManager->flush();
+                        return $this->redirectToRoute('app_intervention_lister');
+                }
+                else
+                {
+                    return $this->render('entities/modifier.html.twig', array(
+                        'display' => 'intervention',
+                        'form' => $form->createView()
+                    ));
+                }
         }
     }
     #[Route('/supprimer/{id}', name: 'supprimer')]
