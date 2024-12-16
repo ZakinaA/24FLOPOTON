@@ -16,6 +16,20 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
+    /**
+     * @return Inscription[]
+     */
+    public function findByResponsable($responsableId): array
+    {
+        return $this->createQueryBuilder('i')
+            ->innerJoin('i.eleve', 'e')
+            ->innerJoin('e.responsable', 'r')
+            ->where('r.id = :responsableId')
+            ->setParameter('responsableId', $responsableId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Inscription[] Returns an array of Inscription objects
     //     */
