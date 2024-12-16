@@ -4,22 +4,22 @@
         
     </head>
     <body>       
-		<h3>PAGE DE CONSULTATION D'UN INSTRUMENT</h3>
+		<h2>PAGE DE CONSULTATION D'UN INSTRUMENT</h2>
         
   <table> 
-  	    <tr><td><b>{{ instrument.typeInstrument.libelle}}</b></td></tr>
-	    <tr><td>Date d'achat : </td><td>{{ instrument.dateAchat|date("d/m/Y") }}</td></tr>
-	    <tr><td>Prix d'achat : </td><td>{{ instrument.prixAchat }}</td></tr>
-        <tr><td>Marque : </td><td>{{ instrument.marque.libelle }} Modele : </td><td>{{ instrument.modele.nom }}</td>
+  	    <tr><td><h4><b>{{ instrument.typeInstrument.libelle}}</b></h4></td></tr>
+	    <tr><td><b>Date d'achat :</b> {{ instrument.dateAchat|date("d/m/Y") }}</td></tr>
+	    <tr><td><b>Prix d'achat :</b> {{ instrument.prixAchat }}</td></tr>
+        <tr><td><b>Marque :</b> {{ instrument.marque.libelle }}<b> Modele : </b></td> <td>{{ instrument.modele.nom }}</td>
         <td  rowspan="8" class="imgIns">
 					        {% set photo = 'image/instrument/'~ instrument.id ~'.jpg' %}
-					        <span class="zoom"><img src="{{ asset(photo | trans )}}", width="200px",height:"200px"/></span></td></tr>
-        <tr><td>Numéro de série : </td><td>{{ instrument.numSerie }} </td></tr>
-	    <tr><td>Couleur dominante : </td><td>{{ instrument.couleur }}</td></tr>
-        <tr><td>Utilisation : </td><td>{{ instrument.utilisation }}</td></tr>
+					        <span class="zoom"><img src="{{ asset(photo | trans )}}", width="150px",height:"150px"/></span></td></tr>
+        <tr><td><b>Numéro de série : </b></td><td>{{ instrument.numSerie }} </td></tr>
+	    <tr><td><b>Couleur dominante : </b></td><td>{{ instrument.couleur }}</td></tr>
+        <tr><td><b>Utilisation : </b></td><td>{{ instrument.utilisation }}</td></tr>
  </table>
  
- <h3>LISTE DES INTERVENTIONS</h3>
+ <h2>LISTE DES INTERVENTIONS</h2>
    <table width="60%" border="2" cellspacing="1" cellpadding="10">
 
         <thead>
@@ -51,7 +51,6 @@
  {% endfor %}
   {% endif %}
     </table>
-
-
-<br>
+    </br>
+    <a class="btn btn-primary" type="button" href={{ path('app_typeinstrument_lister') }}>Retour</a>
 {% endblock %}
