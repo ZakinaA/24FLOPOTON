@@ -2,8 +2,9 @@
 {% block title %}Modifier {{display}}{% endblock %}
 {% block body %}
 <h1>MODIFIER {{display|upper}}</h1>
+<a class="btn btn-primary" type="button" href="../">Retour à la liste</a>
+<div style="width: 20%; margin: 0% 0% 0% 40%;">
 {{ form_start(form) }}
 {{ form_end(form) }}
-</br>
-<a class="btn" type="button" href="../">Retour à la liste</a>
+</div>
 {% endblock %}
