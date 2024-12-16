@@ -13,7 +13,7 @@
         <tr><td>Marque : </td><td>{{ instrument.marque.libelle }} Modele : </td><td>{{ instrument.modele.nom }}</td>
         <td  rowspan="8" class="imgIns">
 					        {% set photo = 'image/instrument/'~ instrument.id ~'.jpg' %}
-					        <span class="zoom"><img src="{{ asset(photo | trans )}}"/></span></td></tr>
+					        <span class="zoom"><img src="{{ asset(photo | trans )}}", width="200px",height:"200px"/></span></td></tr>
         <tr><td>Numéro de série : </td><td>{{ instrument.numSerie }} </td></tr>
 	    <tr><td>Couleur dominante : </td><td>{{ instrument.couleur }}</td></tr>
         <tr><td>Utilisation : </td><td>{{ instrument.utilisation }}</td></tr>
