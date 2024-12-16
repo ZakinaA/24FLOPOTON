@@ -22,29 +22,73 @@ class EleveController extends AbstractController
     }
 
     #[Route('/lister', name: 'lister')]
-    public function lister(ManagerRegistry $doctrine)
-    {
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Eleve::class);
-        
-        $eleves= $repository->findAll();
-        return $this->render('eleve/lister.html.twig', [
-            'pEleves' => $eleves,
-        ]); 
-    }
-    #[Route('/consulter/{id}', name: 'consulter')]
-    public function consulterEleves(ManagerRegistry $doctrine, int $id){
+        $entities = $repository->findAll();
 
-        $eleve= $doctrine->getRepository(Eleve::class)->find($id);
+        $headers = ['Nom', 'Prenom', 'Ville', 'Téléphone', 'Mail', 'Nom du responsable', 'Prenom du responsable'];
+        $rows = [];
 
-        if (!$eleve) {
-            throw $this->createNotFoundException(
-            'Aucun eleves trouvé avec le numéro '.$id
-            );
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getNom(),
+                $e->getPrenom(),
+                $e->getVille(),
+                $e->getTel(),
+                $e->getMail(),
+                $e->getResponsable()->getNom(),
+                $e->getResponsable()->getPrenom(),
+            ];
         }
 
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Eleve',
+            'display' => 'Eleve',
+            'display_plural' => 'Eleves',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
+    }
+    #[Route('/consulter/{id}', name: 'consulter')]    
+    public function consulter(ManagerRegistry $doctrine, int $id){
+        $repository = $doctrine->getRepository(Eleve::class);
+        $entity = $repository->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Le Cours n\'a pas été trouvé');
+        }
+
+        $coursLibelles = [];
+        foreach ($entity->getInscriptions() as $inscription) {
+            $coursLibelles[] = $inscription->getCours()->getLibelle();
+        }
+
+        $columns = [
+            'Identifiant' => $entity->getId(),
+            'Nom' => $entity->getNom(),
+            'Preom' => $entity->getPrenom(),
+            'Cours' => $coursLibelles,
+            'Ville' => $entity->getVille(),
+            'Code Postal' => $entity->getCopos(),
+            'Numéro de rue' => $entity->getNumRue(),
+            'Rue' => $entity->getRue(),
+            'Responsable ' => $entity->getResponsable()->getPrenom().' - '.$entity->getResponsable()->getNom(),
+            'Ville du responsable' => $entity->getResponsable()->getVille(),
+            'Code Postal du responsable' => $entity->getResponsable()->getCopos(),
+            'Numéro de rue du responsable' => $entity->getResponsable()->getNumRue(),
+            'Rue du responsable' => $entity->getResponsable()->getRue(),
+
+
+            
+        ];
+
         //return new Response('Eleves : '.$eleves->getLibelle());
-        return $this->render('eleve/consulter.html.twig', [
-            'eleve' => $eleve,]);
+        return $this->render('entities/consulter.html.twig', [
+            'name' => 'Eleve',
+            'entity' => $entity,
+            'columns' => $columns,
+        ]);
     }
 
     #[Route('/ajouter', name: 'ajouter')]
@@ -63,7 +107,9 @@ class EleveController extends AbstractController
             //return $this->render('eleve/lister.html.twig', ['eleves' => $eleves,]);
             return $this->redirectToRoute('app_eleve_lister');
         } else  {
-            return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(),));
+            return $this->render('entities/ajouter.html.twig', array(
+                'display' => 'Eleve',
+                'form' => $form->createView(),));
         }
     }
     #[Route('/modifier/{id}', name: 'modifier')]
@@ -90,7 +136,9 @@ class EleveController extends AbstractController
                      return $this->redirectToRoute('app_eleve_lister');
                }
                else{
-                    return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(),));
+                    return $this->render('entities/modifier.html.twig', array(
+                        'display' => 'Eleve',
+                        'form' => $form->createView(),));
                }
             }
      }
