@@ -65,6 +65,9 @@ class CoursController extends AbstractController
             'Age Minimum' => $entity->getAgeMini(),
             'Heure de début' => $entity->getHeureDebut()->format('H:i'),
             'Heure de Fin' => $entity->getHeureFin()->format('H:i'),
+            'Jour' => $entity->getJour()?->getLibelle(),
+            'Professeur' => $entity->getProfesseur()?->getPrenom().' '.$entity->getProfesseur()?->getNom(),
+            'Type Cours' => $entity->getTypeCours()?->getLibelle(),
         ];
  
         return $this->render('entities/consulter.html.twig', [
