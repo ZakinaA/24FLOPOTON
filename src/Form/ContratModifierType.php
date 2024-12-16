@@ -26,11 +26,12 @@ class ContratModifierType extends AbstractType
             ->add('etatDetailleFin')
             ->add('eleve', EntityType::class, [
                 'class' => Eleve::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('instrument', EntityType::class, [
                 'class' => Instrument::class,
-                'choice_label' => 'id',
+                'choice_label' => function ($instrument) {
+                    return $instrument->getTypeInstrument()->getLibelle() . ' - ' . $instrument->getNumSerie();}
             ])
             ->add('enregistrer', SubmitType::class, options: array('label' => 'Valider'))
         ;

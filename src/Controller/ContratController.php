@@ -20,15 +20,33 @@ class ContratController extends AbstractController
         return $this->redirectToRoute('app_contrat_lister');
     }
     
-    #[Route('/lister', name: 'lister')]
-    public function lister(ManagerRegistry $doctrine)
-    {
+    #[Route('/lister', name: 'lister')]    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Contrat::class);
-        
-        $contrats= $repository->findAll();
-        return $this->render('contrat/lister.html.twig', [
-            'pContrats' => $contrats,
-        ]); 
+        $entities = $repository->findAll();
+
+        $headers = ['Nom de l\'instrument', 'Prenom de l\'élève', 'Nom de l\'élève', 'Date de début', 'Date de fin', 'État avant le prêt', 'État après le prêt'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getInstrument()?->getTypeInstrument()?->getLibelle(),
+                $e->getEleve()?->getPrenom(),
+                $e->getEleve()?->getNom(),
+                $e->getDateDebut()?->format('d/m/Y'),
+                $e->getDateFin()?->format('d/m/Y'), 
+                $e->getEtatDetailleDebut(),
+                $e->getEtatDetailleFin()
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Contrat',
+            'display' => 'Contrat',
+            'display_plural' => 'Contrats',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
     }
     #[Route('/ajouter', name: 'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){
@@ -46,37 +64,43 @@ class ContratController extends AbstractController
             //return $this->render('contrat/lister.html.twig', ['contrats' => $contrats,]);
             return $this->redirectToRoute('app_contrat_lister');
         } else  {
-            return $this->render('contrat/ajouter.html.twig', array('form' => $form->createView(),));
+            return $this->render('entities/ajouter.html.twig', array(
+                'display' => 'Contrat',
+                'form' => $form->createView(),));
         }
     }
     #[Route('/modifier/{id}', name: 'modifier')]
-
     public function modifierContrats(ManagerRegistry $doctrine, $id, Request $request){
  
         $contrats = $doctrine->getRepository(Contrat::class)->find($id);
      
         if (!$contrats) {
-            throw $this->createNotFoundException('Aucun contrats trouvé avec le numéro '.$id);
+            throw $this->createNotFoundException('Aucun contrat trouvé avec le numéro '.$id);
         }
         else
         {
+
                 $form = $this->createForm(ContratModifierType::class, $contrats);
                 $form->handleRequest($request);
-     
+
                 if ($form->isSubmitted() && $form->isValid()) {
-     
-                     $contrats = $form->getData();
-                     $entityManager = $doctrine->getManager();
-                     $entityManager->persist($contrats);
-                     $entityManager->flush();
-                     //return $this->render('contrat/lister.html.twig', ['contrats' => $contrats,]);
-                     return $this->redirectToRoute('app_contrat_lister');
-               }
-               else{
-                    return $this->render('contrat/ajouter.html.twig', array('form' => $form->createView(),));
-               }
-            }
-     }
+
+                        $contrats = $form->getData();
+                        $entityManager = $doctrine->getManager();
+                        $entityManager->persist($contrats);
+                        $entityManager->flush();
+                        //return $this->render('contrat/lister.html.twig', ['contrats' => $contrats,]);
+                        return $this->redirectToRoute('app_contrat_lister');
+                }
+                else
+                {
+                    return $this->render('entities/modifier.html.twig', array(
+                        'display' => 'Contrat',
+                        'form' => $form->createView()
+                    ));
+                }
+        }
+    }
     #[Route('/supprimer/{id}', name: 'supprimer')]
 
     public function supprimer(ManagerRegistry $doctrine, int $id): Response
