@@ -26,12 +26,13 @@ class CoursController extends AbstractController
         $repository = $doctrine->getRepository(Cours::class);
         $entities = $repository->findAll();
 
-        $headers = ['Âge minimum', 'Heure début', 'Heure fin', 'Jour', 'Professeur', 'Type'];
+        $headers = ['Libelle', 'Âge minimum', 'Heure début', 'Heure fin', 'Jour', 'Professeur', 'Type'];
         $rows = [];
 
         foreach ($entities as $e) {
             $rows[] = [
                 $e->getId(),
+                $e->getLibelle(),
                 $e->getAgeMini(),
                 $e->getHeureDebut()->format('H:i'),
                 $e->getHeureFin()->format('H:i'),
@@ -64,6 +65,9 @@ class CoursController extends AbstractController
             'Age Minimum' => $entity->getAgeMini(),
             'Heure de début' => $entity->getHeureDebut()->format('H:i'),
             'Heure de Fin' => $entity->getHeureFin()->format('H:i'),
+            'Jour' => $entity->getJour()?->getLibelle(),
+            'Professeur' => $entity->getProfesseur()?->getPrenom().' '.$entity->getProfesseur()?->getNom(),
+            'Type Cours' => $entity->getTypeCours()?->getLibelle(),
         ];
  
         return $this->render('entities/consulter.html.twig', [
