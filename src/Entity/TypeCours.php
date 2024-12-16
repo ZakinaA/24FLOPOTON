@@ -24,6 +24,9 @@ class TypeCours
     #[ORM\OneToMany(targetEntity: Cours::class, mappedBy: 'typecours')]
     private Collection $cours;
 
+    #[ORM\OneToOne(mappedBy: 'TypeCours', cascade: ['persist', 'remove'])]
+    private ?Tarif $tarif = null;
+
     public function __construct()
     {
         $this->cours = new ArrayCollection();
@@ -72,6 +75,28 @@ class TypeCours
                 $cour->setTypecours(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTarif(): ?Tarif
+    {
+        return $this->tarif;
+    }
+
+    public function setTarif(?Tarif $tarif): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($tarif === null && $this->tarif !== null) {
+            $this->tarif->setTypeCours(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($tarif !== null && $tarif->getTypeCours() !== $this) {
+            $tarif->setTypeCours($this);
+        }
+
+        $this->tarif = $tarif;
 
         return $this;
     }
