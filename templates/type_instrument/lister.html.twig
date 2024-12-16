@@ -8,11 +8,13 @@
     <body>
         {% block javascripts %}{% endblock %}
 		
-		LISTE DES TYPES D'INSTRUMENTS</br>
+		<h2><strong><u>LISTE DES TYPES D'INSTRUMENTS</u></strong></h2></br>
 		<table>
 		{% for t in tTypesInstruments %}
 		<tr>
-			<td>{{ t.libelle }}</td>
+			<td><strong><h3>{{ t.libelle }}</h3></strong></td>
+			<td><a class="btn btn-primary" type="button" href={{ path('app_typeinstrument_consulter', {'id': t.id}) }}>Consulter</a></td>
+
 	{% else %}
 		<tr>
 		<td>Aucun type d'instrument n'a été trouvé.</td>

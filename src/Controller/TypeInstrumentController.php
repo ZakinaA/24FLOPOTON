@@ -26,4 +26,20 @@ class TypeInstrumentController extends AbstractController
     return $this->render('type_instrument/lister.html.twig', [
         'tTypesInstruments' => $typesinstruments,]);
     }
+   
+    #[Route('/consulter/{id}', name: 'consulter')]
+    public function consultertypeInstrument(ManagerRegistry $doctrine, int $id){
+        $typeinstrument= $doctrine->getRepository(TypeInstrument::class)->find($id);
+
+        if (!$typeinstrument) {
+            throw $this->createNotFoundException(
+            'Aucun instrument trouvé avec le numéro '.$id
+            );
+        }
+
+        //return new Response('Instrument : '.$instruments->getLibelle());
+        return $this->render('type_instrument/consulter.html.twig', [
+            'typeinstrument' => $typeinstrument,
+        ]);
+    }
 }
