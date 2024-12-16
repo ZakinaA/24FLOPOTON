@@ -35,14 +35,14 @@ class ResponsableType extends AbstractType
             ])
             ->add('copos', NumberType::class, [
                 'required'   => false,
-                'attr' => ['pattern' => '/^[0-9]{8}$/', 'maxlength' => 5]
+                'attr' => ['pattern' => '^[0-9]{5}$', 'maxlength' => 5]
             ])
             ->add('ville', TextType::class, [
                 'required'   => false,
             ])
             ->add('tel', TelType::class, [
                 'required'   => false,
-                'attr' => ['pattern' => '/^[0-9]{8}$/', 'maxlength' => 8]
+                'attr' => ['pattern' => '^[0-9]{10}$', 'maxlength' => 10]
             ])
             ->add('mail', EmailType::class, [
                 'required'   => false,
