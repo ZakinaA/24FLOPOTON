@@ -61,7 +61,7 @@ class EleveController extends AbstractController
 
         $coursLibelles = [];
         foreach ($entity->getInscriptions() as $inscription) {
-            $coursLibelles[] = $inscription->getCours()->getLibelle();
+            $coursLibelles[] = $inscription->getCours()?->getLibelle();
         }
 
         $columns = [
@@ -73,11 +73,11 @@ class EleveController extends AbstractController
             'Code Postal' => $entity->getCopos(),
             'Numéro de rue' => $entity->getNumRue(),
             'Rue' => $entity->getRue(),
-            'Responsable ' => $entity->getResponsable()->getPrenom().' - '.$entity->getResponsable()->getNom(),
-            'Ville du responsable' => $entity->getResponsable()->getVille(),
-            'Code Postal du responsable' => $entity->getResponsable()->getCopos(),
-            'Numéro de rue du responsable' => $entity->getResponsable()->getNumRue(),
-            'Rue du responsable' => $entity->getResponsable()->getRue(),
+            'Responsable ' => $entity->getResponsable()?->getPrenom().' - '.$entity->getResponsable()?->getNom(),
+            'Ville du responsable' => $entity->getResponsable()?->getVille(),
+            'Code Postal du responsable' => $entity->getResponsable()?->getCopos(),
+            'Numéro de rue du responsable' => $entity->getResponsable()?->getNumRue(),
+            'Rue du responsable' => $entity->getResponsable()?->getRue(),
 
 
             
