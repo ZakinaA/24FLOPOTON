@@ -2,10 +2,9 @@
 {% block title %}Ajouter {{display}}{% endblock %}
 {% block body %}
 <h1>AJOUTER {{display|upper}}</h1>
-<div style="width: 350px; position: absolute; margin-top: 8%; left: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%);">
+<a class="btn btn-primary" type="button" href="./">Retour à la liste</a>
+<div style="width: 20%; margin: 0% 0% 0% 40%;">
 {{ form_start(form) }}
 {{ form_end(form) }}
 </div>
-</br>
-<a class="btn btn-primary" type="button" href="./">Retour à la liste</a>
 {% endblock %}
