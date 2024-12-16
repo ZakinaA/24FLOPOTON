@@ -75,4 +75,20 @@ class AccessoireController extends AbstractController
                 'form' => $form->createView()
             ]);
         }
+
+        #[Route('/supprimer/{id}', name: 'supprimer')]
+    public function supprimer(ManagerRegistry $doctrine, int $id): Response
+    {
+        $accessoire = $doctrine->getRepository(Accessoire::class)->find($id);
+
+        if (!$accessoire) {
+            throw $this->createNotFoundException('Aucun accessoire trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove(object: $accessoire); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_accessoire_lister');
+    }
 }
