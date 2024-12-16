@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AccessoireType extends AbstractType
 {
@@ -17,7 +18,7 @@ class AccessoireType extends AbstractType
             ->add('libelle')
             ->add('instrument', EntityType::class, [
                 'class' => Instrument::class,
-                'choice_label' => 'id',
+                'choice_label' => 'numSerie',
             ])
             ->add('enregistrer', SubmitType::class, array('label' => 'Ajout un accessoire'))
         ;
