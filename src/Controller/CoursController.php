@@ -10,6 +10,8 @@ use App\Entity\Cours;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\CoursType;
 use App\Form\CoursModifierType;
+use App\Repository\CoursRepository;
+
 
 
 #[Route('/cours', name: 'app_cours_')]
@@ -136,4 +138,22 @@ class CoursController extends AbstractController
 
         return $this->redirectToRoute('app_cours_lister');
     }
+
+    #[Route('/calendrier', name: 'calendrier')]
+public function calendrier(CoursRepository $coursRepository): Response
+{
+    // Récupération de tous les cours
+    $coursList = $coursRepository->findAll();
+
+    // Liste des jours et des heures
+    $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+    $heures = range(8, 18); // De 8h à 18h
+
+    return $this->render('cours/calendrier.html.twig', [
+        'coursList' => $coursList,
+        'jours' => $jours,
+        'heures' => $heures,
+    ]);
+}
+
 }
