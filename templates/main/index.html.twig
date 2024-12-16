@@ -1,8 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil - e-Music{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue !</h1>
-    <img src={{ asset('images/favicon.png') }} alt="eMusic" style="height: 300px; margin-left: 77%;"/>
+    <div class="container mt-5">
+        <!-- Section Titre principal -->
+        <div class="text-center mb-4">
+            <h1 class="display-4">Bienvenue à l'école de musique e-Music</h1>
+            <p class="lead">Inscrite dans le paysage culturel de la ville d'Ifs depuis 40 ans.</p>
+            <img src="{{ asset('images/favicon.png') }}" alt="eMusic" style="height: 300px;"/>
+        </div>
+
+        <!-- Section Description -->
+        <section class="mb-5">
+            <h2>À propos de l'école</h2>
+            <p>
+                Ouverte à tous, enfants, adolescents et adultes, e Music propose des cours d'instruments, des ateliers 
+                d'ensemble et un soutien à la création musicale. Rejoignez une équipe passionnée et découvrez le plaisir 
+                de la musique grâce à notre équipe pédagogique de 16 enseignants.
+            </p>
+        </section>
+
+        <!-- Section Actualités -->
+        <section class="mb-5">
+            <h2>Actualités & Événements</h2>
+            <div class="alert alert-info">
+                <strong>Prochain événement :</strong> Concert des élèves - 15 juin à 20h, Salle Municipale.
+            </div>
+        </section>
+    </div>
 {% endblock %}
