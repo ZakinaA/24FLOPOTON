@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendrier des Cours{% endblock %}
+
+{% block body %}
+<h1>Calendrier des Cours</h1>
+
+<table border="1" cellspacing="0" cellpadding="5" style="width:100%; text-align:center;">
+    <thead>
+        <tr>
+            <th>Heures</th>
+            {% for jour in jours %}
+                <th>{{ jour }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for heure in heures %}
+            <tr>
+                <td>{{ heure }}h - {{ heure + 1 }}h</td>
+                {% for jour in jours %}
+                    <td>
+                        {# Vérifie si le cours est dans l'intervalle de cette heure #}
+                        {% for cours in coursList %}
+                            {# Vérifie que l'heure est dans l'intervalle du cours #}
+                            {% if cours.jour.libelle == jour and cours.heureDebut|date('H') <= heure and cours.heureFin|date('H') > heure %}
+                                <div>
+                                    <strong>{{ cours.libelle }}</strong><br>
+                                    Prof: {{ cours.professeur.prenom }} {{ cours.professeur.nom }}<br>
+                                    Type: {{ cours.typecours.libelle }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

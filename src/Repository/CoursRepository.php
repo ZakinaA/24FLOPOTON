@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Cours;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Eleve;  // Importation correcte de l'entité Eleve
 
 /**
  * @extends ServiceEntityRepository<Cours>
@@ -40,4 +41,16 @@ class CoursRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByEleve(Eleve $eleve)
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.inscriptions', 'i') // Assurez-vous que l'entité Cours est liée à l'entité Inscription
+            ->where('i.eleve = :eleve')
+            ->setParameter('eleve', $eleve)
+            ->getQuery()
+            ->getResult(); // Utilisez getResult() pour retourner plusieurs résultats
+    }
+
+
 }
