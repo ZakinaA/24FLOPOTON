@@ -20,9 +20,11 @@ class Inscription
     private ?\DateTimeInterface $dateInscription = null;
 
     #[ORM\ManyToOne(inversedBy: 'inscriptions')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Cours $cours = null;
 
     #[ORM\ManyToOne(inversedBy: 'inscriptions')]
+
     private ?Eleve $eleve = null;
 
     /**
