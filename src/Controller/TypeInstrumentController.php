@@ -18,6 +18,30 @@ class TypeInstrumentController extends AbstractController
     }
 
     #[Route('/lister', name: 'lister')]
+    public function lister(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(TypeInstrument::class);
+        $entities = $repository->findAll();
+
+        $headers = ['Libelle'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getLibelle(),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'TypeInstrument',
+            'display' => 'Type d\'instrument',
+            'display_plural' => 'Types d\'instrument',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
+    }
+
+    #[Route('/listerold', name: 'listerold')]
     function typeinstrumentLister(ManagerRegistry $doctrine){
 
         $repository = $doctrine->getRepository(TypeInstrument::class);

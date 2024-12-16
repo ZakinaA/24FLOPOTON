@@ -18,12 +18,34 @@ class MarqueController extends AbstractController
     }
 
     #[Route('/lister', name: 'lister')]
-    function marqueLister(ManagerRegistry $doctrine){
-
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Marque::class);
+        $entities = $repository->findAll();
 
-    $marques= $repository->findAll();
-    return $this->render('marque/lister.html.twig', [
-        'mMarque' => $marques,]);
+        $headers = ['Libelle'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getLibelle(),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Marque',
+            'display' => 'Marque',
+            'display_plural' => 'Marques',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
+    }
+
+    #[Route('/listerold', name: 'listerold')]
+    function marqueLister(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(Marque::class);
+        $marques= $repository->findAll();
+
+        return $this->render('marque/lister.html.twig', ['mMarque' => $marques,]);
     }
 }

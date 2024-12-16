@@ -18,12 +18,34 @@ class ModeleController extends AbstractController
     }
 
     #[Route('/lister', name: 'lister')]
-    function modeleLister(ManagerRegistry $doctrine){
-
+    public function lister(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Modele::class);
+        $entities = $repository->findAll();
 
-    $modeles= $repository->findAll();
-    return $this->render('modele/lister.html.twig', [
-        'mModele' => $modeles,]);
+        $headers = ['Libelle'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getNom(),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Modele',
+            'display' => 'Modèle',
+            'display_plural' => 'Modèles',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
+    }
+
+    #[Route('/listerold', name: 'listerold')]
+    function modeleLister(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(Modele::class);
+        $modeles= $repository->findAll();
+
+        return $this->render('modele/lister.html.twig', ['mModele' => $modeles,]);
     }
 }
