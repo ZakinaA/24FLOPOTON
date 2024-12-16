@@ -22,13 +22,14 @@ class TypeInstrumentController extends AbstractController
         $repository = $doctrine->getRepository(TypeInstrument::class);
         $entities = $repository->findAll();
 
-        $headers = ['Libelle'];
+        $headers = ['Libelle', 'Classe d\'instrument'];
         $rows = [];
 
         foreach ($entities as $e) {
             $rows[] = [
                 $e->getId(),
                 $e->getLibelle(),
+                $e->getClasseInstrument()?->getLibelle()
             ];
         }
 
