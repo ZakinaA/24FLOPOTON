@@ -31,7 +31,8 @@ class InterventionType extends AbstractType
             ])
             ->add('instrument', EntityType::class, [
                 'class' => Instrument::class,
-                'choice_label' => 'numSerie',
+                'choice_label' => function ($instrument) {
+                    return $instrument->getTypeInstrument()->getLibelle() . ' - ' . $instrument->getNumSerie();},
             ])
             ->add('enregistrer', SubmitType::class, options: array('label' => 'nouvelle intervention'))
 
