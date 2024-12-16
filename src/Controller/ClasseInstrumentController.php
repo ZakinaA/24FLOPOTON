@@ -35,7 +35,7 @@ class ClasseInstrumentController extends AbstractController
         return $this->render('entities/lister.html.twig', [
             'name' => 'ClasseInstrument',
             'display' => 'ClasseInstrument',
-            'display_plural' => 'Classe d\'Instrument',
+            'display_plural' => 'Classes d\'Instruments',
             'headers' => $headers,
             'rows' => $rows,
         ]);
