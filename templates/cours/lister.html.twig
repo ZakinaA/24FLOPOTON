@@ -1,50 +1,71 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Liste des Cours{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                .table th, .table td {
+                    text-align: center;
+                }
+                .action-buttons a {
+                    margin-right: 10px;
+                }
+            </style>
+        {% endblock %}
     </head>
-    <body>
-        {% block javascripts %}{% endblock %}
-		
-		<h1>LISTE DES COURS <a type="button" class="btn btn-success" href={{ path('app_cours_ajouter') }}>Ajouter</a></h1></br></br>
-		<table width="60%" border="2" cellspacing="1" cellpadding="10">
-		
-		<thead>
-        <tr>
-            <th>Nom du Cours</th>
-            <th>Âge Minimum</th>
-            <th>Heure de Début</th>
-            <th>Heure de Fin</th>
-            <th>Type d'Instrument</th>
-            <th>Jour</th>
-            <th>Professeur</th>
-			<th>Type Cours</th>
-			<th>Action</th>
-        </tr>
-    </thead>
-		
-		{% for c in pCours %}
 
-		<tr>
-			<td><a href="{{ path('app_cours_consulter', { 'id': c.id }) }}">{{ c.libelle }}</a></td>
-			<td>{{ c.ageMini }}</td>
-			<td>{{ c.heureDebut|date('H:i') }}</td>
-			<td>{{ c.heureFin|date('H:i') }}</td>
-			<td>{{ c.typeInstrument.libelle }}</td>
-			<td>{{ c.jour.libelle }}</td>
-			<td>{{ c.professeur.prenom }} {{ c.professeur.nom }}</td>
-			<td>{{ c.typeCours.libelle }}</td>
-			<td>
-				<a class="btn btn-primary" type="button" href={{ path('app_cours_modifier', {'id': c.id}) }}>Modifier</a>
-				<a class="btn btn-danger" type="button" href={{ path('app_cours_supprimer', { 'id': c.id }) }} onclick="return  confirm('Êtes vous sur de vouloir supprimer ce cours ?')">Supprimer</a>
-			</td>
-		</tr>
-	{% else %}
-		<tr>
-		<td>Aucun cours n'a été trouvé.</td>
-		</tr>
-	{% endfor %}
-</table>
+    <body>
+        <div class="container my-5">
+            <h1 class="text-center mb-4">Liste des Cours</h1>
+
+            <div class="text-center mb-4">
+                <a href="{{ path('app_cours_ajouter') }}" class="btn btn-success">Ajouter un Cours</a>
+            </div>
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nom du Cours</th>
+                        <th>Âge Minimum</th>
+                        <th>Heure de Début</th>
+                        <th>Heure de Fin</th>
+                        <th>Type d'Instrument</th>
+                        <th>Jour</th>
+                        <th>Professeur</th>
+                        <th>Type Cours</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in pCours %}
+                        <tr>
+                            <td><a href="{{ path('app_cours_consulter', { 'id': c.id }) }}">{{ c.libelle }}</a></td>
+                            <td>{{ c.ageMini }}</td>
+                            <td>{{ c.heureDebut|date('H:i') }}</td>
+                            <td>{{ c.heureFin|date('H:i') }}</td>
+                            <td>{{ c.typeInstrument.libelle }}</td>
+                            <td>{{ c.jour.libelle }}</td>
+                            <td>{{ c.professeur.prenom }} {{ c.professeur.nom }}</td>
+                            <td>{{ c.typeCours.libelle }}</td>
+                            <td class="action-buttons">
+                                <a class="btn btn-primary" href="{{ path('app_cours_modifier', {'id': c.id}) }}">Modifier</a>
+                                <a class="btn btn-danger" href="{{ path('app_cours_supprimer', { 'id': c.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9" class="text-center">Aucun cours n'a été trouvé.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% block javascripts %}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        {% endblock %}
+    </body>
 {% endblock %}
