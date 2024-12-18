@@ -12,5 +12,9 @@
        <tr><td>Age Minimum : </td><td>{{cours.ageMini}}</td></tr>
 	    <tr><td>Heure de début : </td><td>{{cours.heureDebut|date('H:i')}}</td></tr>
 	    <tr><td>Heure de Fin : </td><td>{{cours.heureFin|date('H:i')}}</td></tr>
+      <tr><td>Type d'instrument : </td><td>{{cours.typeInstrument.libelle}}</td></tr>
+      <tr><td>Jour : </td><td>{{cours.jour.libelle}}</td></tr>
+      <tr><td>Professeur : </td><td>{{cours.professeur.prenom}} {{cours.professeur.nom}}</td></tr>
+      <tr><td>Type Cours : </td><td>{{cours.typeCours.libelle}}</td></tr>
  </table>
 {% endblock %}
