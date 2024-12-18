@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1>Calendrier des Cours de {{ eleve.prenom }} {{ eleve.nom }}</h1>
-
+</br></br>
 <table border="1" cellspacing="0" cellpadding="5" style="width:100%; text-align:center;">
     <thead>
         <tr>
@@ -20,7 +20,6 @@
                 <td>{{ heure }}h - {{ heure + 1 }}h</td>
                 {% for jour in jours %}
                     <td>
-                        {# Vérifie si le cours est dans l'intervalle de cette heure et de ce jour #}
                         {% for cours in coursList %}
                             {% if cours.jour.libelle == jour and cours.heureDebut|date('H') <= heure and cours.heureFin|date('H') > heure %}
                                 <div>
