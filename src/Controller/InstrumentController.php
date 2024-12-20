@@ -23,13 +23,40 @@ class InstrumentController extends AbstractController
     }
 
     #[Route('/lister', name: 'lister')]
+    public function lister(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(Instrument::class);
+        $entities = $repository->findAll();
+
+        $headers = ['Num série', 'Utilisation', 'Couleur', 'Marque', 'Type d\'instrument'];
+        $rows = [];
+
+        foreach ($entities as $e) {
+            $rows[] = [
+                $e->getId(),
+                $e->getNumSerie(),
+                $e->getUtilisation(),
+                $e->getCouleur(),
+                $e->getMarque()?->getLibelle(),
+                $e->getTypeInstrument()?->getLibelle(),
+            ];
+        }
+
+        return $this->render('entities/lister.html.twig', [
+            'name' => 'Instrument',
+            'display' => 'Instrument',
+            'display_plural' => 'Instruments',
+            'headers' => $headers,
+            'rows' => $rows,
+        ]);
+    }
+
+    #[Route('/listerold', name: 'listerold')]
     function instrumentLister(ManagerRegistry $doctrine){
 
         $repository = $doctrine->getRepository(Instrument::class);
 
     $instruments= $repository->findAll();
-    return $this->render('instrument/lister.html.twig', [
-        'iInstrument' => $instruments,]);
+        return $this->render('instrument/lister.html.twig', ['iInstrument' => $instruments]);
     }
 
     #[Route('/consulter/{id}', name: 'consulter')]
@@ -53,6 +80,28 @@ class InstrumentController extends AbstractController
 
     #[Route('/ajouter', name: 'ajouter')]
     public function ajouter(ManagerRegistry $doctrine, Request $request){
+        $e = new Instrument();
+        $form = $this->createForm(InstrumentType::class, $e);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $e = $form->getData();
+            
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($e);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('app_instrument_consulter', ['id' => $e->getId()]);
+        }
+        
+        return $this->render('entities/ajouter.html.twig', [
+            'display' => 'Instrument',
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/ajouterold', name: 'ajouterold')]
+    public function ajouterold(ManagerRegistry $doctrine, Request $request){
         $instrument = new Instrument();
         $form = $this->createForm(InstrumentType::class, $instrument);
         $form->handleRequest($request);
@@ -71,8 +120,29 @@ class InstrumentController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'modifier')]
+    public function modifier(ManagerRegistry $doctrine, $id, Request $request){
+        $e = $doctrine->getRepository(Instrument::class)->find($id);
+        
+        if (!$e) {
+            throw $this->createNotFoundException('Aucun instrument trouvé avec l\'ID '.$id);
+        }
 
-    public function modifierInstrument(ManagerRegistry $doctrine, $id, Request $request){
+        $form = $this->createForm(InstrumentModifierType::class, $e);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $doctrine->getManager();
+            $entityManager->flush();
+            return $this->redirectToRoute('app_instrument_consulter', ['id'=> $e->getId()]);
+        }
+
+        return $this->render('entities/modifier.html.twig', [
+            'display' => 'Instrument',
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/modifierold/{id}', name: 'modifierold')]
+    public function modifierold(ManagerRegistry $doctrine, $id, Request $request){
  
         //récupération du instrument dont l'id est passé en paramètre
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);

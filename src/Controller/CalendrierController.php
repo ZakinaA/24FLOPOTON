@@ -26,7 +26,7 @@ class CalendrierController extends AbstractController
         $coursList = $coursRepository->findAll();
 
         // Liste des jours et des heures
-        $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+        $jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
         $heures = range(8, 18); // De 8h à 18h
 
         return $this->render('cours/calendrier.html.twig', [
@@ -55,7 +55,7 @@ class CalendrierController extends AbstractController
         $coursList = $coursRepository->findByEleve($eleve);
 
         // Définir la liste des jours de la semaine
-        $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+        $jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 
         // Définir la liste des heures, de 8h à 18h
         $heures = range(8, 18);  // Exemple pour 8h à 18h

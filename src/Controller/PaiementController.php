@@ -25,13 +25,14 @@ class PaiementController extends AbstractController
         $repository = $doctrine->getRepository(Paiement::class);
         $entities = $repository->findAll();
 
-        $headers = ['Nom du cours', 'Nom de l\'Eleve', 'Montant du Paiement', 'Date du Paiement', 'Type'];
+        $headers = ['Nom du cours', 'Type de Cours', 'Nom de l\'Eleve', 'Montant du Paiement', 'Date du Paiement'];
         $rows = [];
 
         foreach ($entities as $e) {
             $rows[] = [
                 $e->getId(),
                 $e->getInscription()?->getCours()?->getLibelle(),
+                $e->getInscription()?->getCours()?->getTypecours()?->getLibelle(),
                 $e->getInscription()?->getEleve()?->getPrenom().' '.$e->getInscription()?->getEleve()?->getNom(),
                 $e->getMontant(),
                 $e->getDatePaiement()->format('m/d/Y')

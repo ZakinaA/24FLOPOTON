@@ -88,7 +88,7 @@ class TypeInstrumentController extends AbstractController
         }
         
         return $this->render('entities/ajouter.html.twig', [
-            'display' => 'Cours',
+            'display' => 'un Type d\'instrument',
             'form' => $form->createView()
         ]);
     }

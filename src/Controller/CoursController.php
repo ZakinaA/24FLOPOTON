@@ -41,7 +41,7 @@ class CoursController extends AbstractController
                 $e->getHeureDebut()->format('H:i'),
                 $e->getHeureFin()->format('H:i'),
                 $e->getJour()?->getLibelle() ?? '',
-                $e->getProfesseur()?->getPrenom().' '.$e->getProfesseur()?->getPrenom(),
+                $e->getProfesseur()?->getNom().' '.$e->getProfesseur()?->getPrenom(),
                 $e->getTypecours()?->getLibelle() ?? '',
             ];
         }
@@ -123,5 +123,21 @@ class CoursController extends AbstractController
             'display' => 'Cours',
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/supprimer/{id}', name: 'supprimer')]
+    public function supprimer(ManagerRegistry $doctrine, int $id): Response
+    {
+        $e = $doctrine->getRepository(Cours::class)->find($id);
+
+        if (!$e) {
+            throw $this->createNotFoundException('Aucun cours trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($e); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_cours_lister');
     }
 }

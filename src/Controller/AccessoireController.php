@@ -24,15 +24,15 @@ class AccessoireController extends AbstractController
         $repository = $doctrine->getRepository(Accessoire::class);
         $entities = $repository->findAll();
 
-        $headers = ['Libelle', 'Instrument'];
+        $headers = ['Libelle', 'Instrument', 'Numéro de série'];
         $rows = [];
 
         foreach ($entities as $e) {
             $rows[] = [
                 $e->getId(),
                 $e->getLibelle(),
-                $e->getInstrument()?->getTypeInstrument()?->getLibelle() ?? '',
-
+                $e->getInstrument()?->getTypeInstrument()?->getLibelle(),
+                $e->getInstrument()?->getNumSerie(),
             ];
         }
 

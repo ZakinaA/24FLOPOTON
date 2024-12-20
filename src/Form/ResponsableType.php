@@ -47,10 +47,10 @@ class ResponsableType extends AbstractType
             ->add('mail', EmailType::class, [
                 'required'   => false,
             ])
-            ->add('quotientfamilial', EntityType::class, [
-                'class' => QuotientFamilial::class,
-                'choice_label' => 'libelle',
-            ])
+            //->add('quotientfamilial', EntityType::class, [
+            //    'class' => QuotientFamilial::class,
+            //    'choice_label' => 'libelle',
+            //])
         ;
     }
 
