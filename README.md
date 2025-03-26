@@ -1,1 +1,1 @@
-Lien local : http://172.20.177.77/flopoton/public/
+Lien distant: http://172.20.177.77/flopoton/public/
