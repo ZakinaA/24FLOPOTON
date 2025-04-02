@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TarifRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TarifRepository::class)]
@@ -14,25 +16,25 @@ class Tarif
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $montant = null;
+    private ?float $montant = null;
 
-    #[ORM\OneToOne(inversedBy: 'QuotientFamilial', cascade: ['persist', 'remove'])]
-    private ?TypeCours $TypeCours = null;
+    #[ORM\ManyToOne(inversedBy: 'tarif')]
+    private ?TypeCours $typeCours = null;
 
-    #[ORM\OneToOne(inversedBy: 'tarif', cascade: ['persist', 'remove'])]
-    private ?QuotientFamilial $QuotientFamilial = null;
+    #[ORM\ManyToOne(inversedBy: 'tarif')]
+    private ?QuotientFamilial $quotientFamilial = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getMontant(): ?int
+    public function getMontant(): ?float
     {
         return $this->montant;
     }
 
-    public function setMontant(int $montant): static
+    public function setMontant(float $montant): static
     {
         $this->montant = $montant;
 
@@ -41,24 +43,24 @@ class Tarif
 
     public function getTypeCours(): ?TypeCours
     {
-        return $this->TypeCours;
+        return $this->typeCours;
     }
 
-    public function setTypeCours(?TypeCours $TypeCours): static
+    public function setTypeCours(?TypeCours $typeCours): static
     {
-        $this->TypeCours = $TypeCours;
+        $this->typeCours = $typeCours;
 
         return $this;
     }
 
     public function getQuotientFamilial(): ?QuotientFamilial
     {
-        return $this->QuotientFamilial;
+        return $this->quotientFamilial;
     }
 
-    public function setQuotientFamilial(?QuotientFamilial $QuotientFamilial): static
+    public function setQuotientFamilial(?QuotientFamilial $quotientFamilial): static
     {
-        $this->QuotientFamilial = $QuotientFamilial;
+        $this->quotientFamilial = $quotientFamilial;
 
         return $this;
     }
