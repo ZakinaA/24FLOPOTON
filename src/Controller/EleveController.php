@@ -37,8 +37,8 @@ class EleveController extends AbstractController
                 $e->getVille(),
                 $e->getTel(),
                 $e->getMail(),
-                $e->getResponsable()->getNom(),
-                $e->getResponsable()->getPrenom(),
+                $e->getResponsable()?->getNom(),
+                $e->getResponsable()?->getPrenom(),
             ];
         }
 
