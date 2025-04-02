@@ -101,7 +101,7 @@ class PaiementController extends AbstractController
                 return $this->redirectToRoute('app_paiement_lister');
         }
         else{
-            return $this->render('entities/ajouter.html.twig', [
+            return $this->render('entities/modifier.html.twig', [
                 'display' => 'Paiement',
                 'form' => $form->createView()
             ]);
