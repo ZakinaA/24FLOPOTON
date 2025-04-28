@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Eleve;
+use App\Entity\Responsable;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +23,14 @@ class EleveType extends AbstractType
             ->add('ville')
             ->add('tel')
             ->add('mail')
+            ->add('responsable', EntityType::class, [
+                'class' => Responsable::class,
+                'choice_label' => 'nom',
+            ])
+            ->add('responsable', EntityType::class, [
+                'class' => Responsable::class,
+                'choice_label' => 'prenom',
+            ])
             ->add('enregistrer', SubmitType::class, options: array('label' => 'Ajouter'))
         ;
     }
