@@ -1,3 +1,4 @@
+Lien externe: https://prodapache.inforostand14.net/flopoton/public/
 Lien interne: http://172.20.177.77/flopoton/public/
 
 Lien local: http://localhost/24flopoton/public/
