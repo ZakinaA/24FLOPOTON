@@ -9,4 +9,6 @@ id/mdp:   gestadmin/gestadmin
           gestio/gestio
           admin/admin
 
+pour se déconnecter d'un utilisateur, ajouter /account/logout à l'url
+
 Pour l'epreuve: https://wiki.sio.bts/doku.php?id=symfony
